@@ -594,7 +594,7 @@ Based on the above and the intense active discussions in academia regarding the 
 
 ### Inference tests and empirical extension
 
-Following @abadie2010synthetic, @abadie2015comparative, and @abadie2021using, I will perform two different inference tests to evaluate the credibility of my results in my final submission.
+Following @abadie2010synthetic, @abadie2015comparative, and @abadie2021using, I will perform two different inference tests as empirical extensions to evaluate the credibility of my results in my final submission. If my model passes these tests, this adds credibility and trustworthiness to my results. Additionally, I will perform one additional empirical extension by deriving an alternative synthetic control model that measures the impact of the NEM on a different variable of interest. 
 
 #### Placebo study
 
@@ -604,33 +604,31 @@ Applying the synthetic control estimation process to each of our comparison unit
 
 #### Robustness test
 
-**must finish**
+The objective of the robustness test is to check the sensitivity of my main results to changes in the country weights, $W^*$. I will iteratively re-estimate the model to construct a counterfactual of Brazil, omitting in each iteration one of the countries that were assigned at least 10\% weights in my main model. According to @abadie2015comparative, by excluding countries that received a large positive weight, we sacrifice some of the goodness of the pre-intervention fit, but this sensitivity check allows for the evaluation of the extent to which results are driven by any particular control country^[Also see @abadie2021using for details on the robustness test.]. If the resulting trend of the impact of the NEM is similar for all the models that create a counterfactual without using one of high weight countries in the main model, this shows that the results are robust to the exclusion of any particular country that was assigned a high predictive weight in main counterfactual.
 
 #### Empirical Extension
 
-**must finish**
+This third empirical extension has proved to be a challenge. Due to the data requirements for the application of synthetic controls, it has proved to be challenging to find another variable with sufficient data availability across the entirety of my country pool to be used as an alternative variable of interest. The variables I am currently considering to be the object of study of this task are: Inflation rate, Human capital index, and Poverty headcount ratio at $3.65 a day (2017 PPP) (% of population).
 
 ## Next Steps (mainly notes for myself)
 
-**TBU**
+- Formatting to-dos on the website
 
-- Discuss assumptions in the selection of the country pool (geography, population, gdp per capita trend, explain why I needed to drop argentina, venezuela, russia, thailand, indonesia, philippines, malaysia). Discuss assumptions that must hold in order for us to get close to a causal interpretation of the resulting synthetic control to be valid.
+- Review my code and run the main synthetic control model
 
-- Discuss inference tests: placebo and robustness (tests that can help justify the assumptions, using variables that are available in my dataset).
+- Review my code and run the inference tests
 
-- As discussed in our meeting, I will define an alternative variable to be used as the variable of interest in the creation of another synthetic control as a sanity check (show trend on both the v and w weights of main result and in the v and w weights derived for this new variable of interest)
+- Make a final decision on the variable for the empirical extension. Run model with that as variable of interest and report results
+
+- Learn how to create tables in qmd that correctly render into the website
 
 ## My questions
 
-**TBU**
+- How to I change the main title of my website in the top left part? It currently shows "scm-application-rodrigo-veiga" which is the name of the folder inside my git and the name of my Rproj file.
 
-- My references look a little weird, how can I fix that? (for example, for them to show Abadie et al. (2015) in the text instead of @abadie2015comparative)
+- How do I add the hyperlink that you have in the bottom right of all your website pages which takes the reader directly to the git repository that created the site?
 
-- How to optimize the input of references in the bibliography? (I am doing it manually in a references.bib file and I guess that there is probably a better way)
-
-- How can I make my Figure 1 and Figure 2 captions centered? I tried a lot of different things and it did not work.
-
-- How can I get rid of the box around my plots? (the one that is outside of the title and axis)
+- How do I properly create tables in a qmd file that render correctly into the website? I tried using the Xtable function or just writing LaTex syntax as I usually do in rmd files (and it works perfectly there), but that did not work in this qmd, so I had to add an image of the table.
 
 end of the assignment :)
 
