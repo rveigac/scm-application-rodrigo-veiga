@@ -10,6 +10,7 @@ website:
         text: Home
       - about.qmd
       - 3200-fp-research-design.qmd
+      - 3200-fp-research-design-expanded.qmd
 
 format:
   html:
