@@ -1,0 +1,634 @@
+---
+title: "Final Submission"
+author: "Rodrigo Veiga"
+
+institute: "University of Pennsylvania"
+date: last-modified
+toc: true
+
+bibliography: References.bib
+
+format: 
+  html:
+    self-contained: true
+
+editor: source
+---
+
+```{r libraries, include=FALSE}
+#libraries
+library(ggplot2)
+library(ggthemes)
+library(readr)
+library(ggdag)
+library(tidyverse)
+library(gt)
+library(modelsummary)
+
+#other libraries that support my style of coding
+library(tidyverse)
+library(rio)
+#library(tidylog)
+library(gapminder)
+library(janitor)
+library(kableExtra)
+```
+
+## 1- Introduction
+
+In late 2009, The Economist published a cover featuring Rio de Janeiro’s Cristo Redentor with the header “Brazil takes off”^[See https://www.economist.com/leaders/2009/11/12/brazil-takes-off]. Less than four years later, it again published a cover featuring Brazil’s Cristo but this time, it questioned: “Has Brazil blown it?”^[See https://www.economist.com/leaders/2013/09/27/has-brazil-blown-it]. What happened in the meantime? This story, like many others that overlap economic policy and electoral politics, is not so straightforward.
+
+This project proposes that the analysis of these questions must focus on a broader timeline. During most of the first two decades of the 21^st^ century, the Brazilian Workers Party presided over the Federal Executive branch (2003-2016). The period was marked by many social advances and improvements in the standards of living but also by corruption scandals, a major global recession, and a severe domestic economic crisis in the 2014-2016 period.
+
+Amid such a noisy environment, the goal of this project is to analyze the impact of economic policies that came to be known as the New Economic Matrix on the trend of GDP per capita in Brazil. I apply the synthetic control method (SCM) using data from the 1990-2018 period, a sample of 19 control countries, and variables that are known predictors of GDP per capita. The SCM is a statistical technique used for causal inference analysis. Developed in a series of papers by @abadie2003economic, @abadie2010synthetic, and @abadie2015comparative – among others – the central focus of this method is to create a counterfactual scenario where a unit of interest (e.g., a country) did not receive a treatment (e.g., a specific set of policies).
+
+With that in mind, my main research question is: 
+
+**Did the New Economic Matrix, instituted by the Workers Party starting in 2006, positively or negatively impact GDP per capita in Brazil?**
+
+This question builds upon a wide range of existing research on the topic. My goal is to add to the discussion from two papers that have used the same empirical method I will imply, albeit with relevant differences in the research question and methodological setting than mine. @carrasco2014decada applies the synthetic control method (SCM) to quantify the impact of the Workers Party tenure on economic development in Brazil. They apply the start of President Lula's first presidential administration as the event of interest and set 2003 as the intervention year. The authors argue that the Party had a negative impact of about 12% in Brazil's GDP per capita as of 2012. @balassiano2018recessao attempts to quantify the impact that domestic factors had on the severity of the Brazilian recession of 2014-2016. The author found evidence that the substantial deterioration of the Brazilian economy was more a result of internal than external factors.
+
+While the studies mentioned above are informative, their results are sub-optimal because their synthetic controls fall short of representing credible counterfactuals to the trend of GDP per capita in Brazil. State-of-the-art literature on the SCM (cited below) asserts that you must have an event that characterizes a clear, traceable break separating before and after scenarios. I argue that Carrasco's intervention year (2003) is not ideal because there are no major shifts in economic policy-making during the first three years of Lula's first term as President. There are also no major shifts, breaks or shocks in Balassiano's choice of intervention year (2013).
+
+The 2003-2005 period is marked by continuity in terms of economic policy-making. Similarly, 2013 is indeed the year before the beginning of the recession, but it is not marked by any specific event or structural changes in economic policy. Therefore, while @carrasco2014decada attempt to create a synthetic Brazil without the Workers Party and @balassiano2018recessao, a synthetic Brazil free of the negative domestic shocks of 2014-2016, their conclusions are weakened by sub-optimal pre-intervention fits. I argue at least that part of this noise is explained by the fact that they are not asking the question that the SCM is best equipped to answer: What is the impact of shifts in policy-making?
+
+Extensive research on economic policy in Brazil presents a clear consensus and points us to the most appropriate setting for the application of synthetic controls. Several different authors employing a myriad of methods (@abreu2014ordem, @barbosa2014desaceleraccao, @borges2016bad, @pessoa2017debate, among others) affirm that a major shift in economic policy (from a macro, micro, monetary, fiscal, and public policy perspectives) happened in early 2006, when Guido Mantega was appointed as the new Finance Minister by the presidential administration.
+
+As several authors have pointed out, Mantega’s rise to the Ministry is a well-defined event that marks the ideological and technical shift in economic policy from a liberal to an interventionist perspective (@barbosa2014desaceleraccao, @pessoa2017debate, @resende2018economia). The media, the government, and academia eventually labeled this shift the New Economic Matrix (NEM). The NEM can be broadly defined as the increase in the state’s intervention in the functioning and shape of markets @pessoa2017debate. The NEM takes the form of several macro and microeconomic policies adopted over the course of the 2006-2018 period that were not present before Mantega assumed the role of Finance Minister, a non-exhaustive list of which follows.
+
+**Some of the core NEM policies were**: change from a floating exchange rate regime to a strongly managed one; recurrent adoption of artificial measures to achieve the primary surplus target, reducing fiscal policy transparency, along with a progressive reduction of the primary surplus; reduction, without the fundamentals allowing, of the real interest rate and, therefore, greater tolerance towards inflation; widespread price controls and microeconomic interventionism, mainly in public utilities and the oil sectors, as an alternative mechanism to contain inflation; weakening and reduction of the role of regulatory agencies; expansion of subsidized credit, especially through BNDES, to stimulate investment, with strong discretion regarding the favored entities; reduction of openness to international trade; expansion of discretionary policies, such as tax breaks for specific sectors or selected goods, at the expense of horizontal policies that treat most sectors equally; increased public intervention and the role of Petrobras in the oil sector; intervention in the electricity sector to anticipate concession renewals; use of public banks to reduce the banking spread; indiscriminate use of national content requirements without concern for the repercussions of these measures on production chains, price levels, and the total factor productivity of the country (@pessoa2017debate, @holland2017matriz, @roriz2016efeitos^[In @bacha2016crise.]).
+
+## 2- Hypothesis
+
+My main hypothesis is that we will observe a negative impact of the NEM in Brazil's GDP per capita trend. This hypothesis is informed by two main arguments.
+
+First, it has been shown that the NEM had negative effects in the Brazilian economy. @borges2017debate, for example, uses three different methodological approaches to argue that – both domestic and external – factors exogenous to the Brazilian economy are responsible for approximately 50% of the economic downturn in the 2012 - 2016 period. While he demonstrates support for some policies packaged within the NEM and argues that the deceleration in potential growth can be tied to several factors that are exogenous to economic policy, the author accepts that most of the remaining 50% are caused by domestic economic policy mistakes of the NEM (not **all** of the remaining 50%, since the author leaves room for measurement errors there). Therefore, I hypothesize that my results are going to be in line with previous literature.
+
+Second, while the results in @balassiano2018recessao are not particularly trustworthy, the author does find that Brazil underperformed with respect to the counterfactual in that paper. As mentioned above, I argue that mapping the event that marked the dawn of a new era in economic policy-making in Brazil and making it the focus of my empirical application will pay off in terms of providing more robust and trustworthy results for the synthetic control. Therefore, @balassiano2018recessao indicates that there was a force causing a negative impact in GDP per capita in Brazil and this project attempts to find out whether the New Economic Matrix was such force.
+
+## 3- Data
+
+### Data and Sample
+
+The unit of analysis will be a country-year panel. I collected data from the World Bank’s World Development Indicators (WDI) dataset. While the World Bank produces a lot of the data points present in my final dataset, the OECD, IMF, UN, and ILO are the primary sources for some of the variables present in the WDI that are part of my model. Additionally, I collected additional data for Terms of Trade directly from the OECD’s National Accounts at a Glance dataset and merged it with my WDI dataset. My raw dataset is composed of 35 countries and 72 variables over the 1970-2022 period. After extensive research and analysis, I have decided that my synthetic control model will be based on a sample of 20 countries and 8 variables over the 1990-2018 period. Details are provided below.
+
+**Country of interest:** Brazil.
+
+**Country pool** (that will be fed into the model to create the synthetic control): Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Türkiye, Ukraine, Uruguay.
+
+**Variable of interest:** GDP per capita, PPP (constant 2017 international $).
+
+**Covariates:** Agriculture, forestry, and fishing, value added (% of GDP); GDP per capita, PPP (constant 2017 international $); Gross capital formation (% of GDP); Industry (including construction), value added (% of GDP); Inflation, consumer prices (annual %); Net barter terms of trade index (2015 = 100); Trade Openness (% of GDP) (defined as Exports of goods and services (% of GDP) + Imports of goods and services (% of GDP), following @abadie2015comparative and the concept of additive indexes we learned in class); and Unemployment, total (% of total labor force) (national estimate).
+
+**Pre-intervention period**: 1990 - 2005
+
+**Post-intervention period**: 2006 (intervention year) - 2018 (the last year before Jair Bolsonaro, the winner of the 2018 Presidential Elections, took over as President).
+
+**Intervention of interest:** The change in Finance Minister in early 2006. Antônio Palocci was replaced by Guido Mantega, setting off the policy changes that encompass what is defined as the New Economic Matrix.
+
+### Preliminary Visualization
+
+Here, I present two preliminary figures and one table. 
+
+The figures trace Brazilian GDP per capita in comparison with selected countries. The goal of this preliminary visualization exercise is twofold. One, to investigate whether Brazil actually took off in the early 2000s, as the 2009 cover for The Economist affirmed. Two, to make the case for why the synthetic control method is the best empirical tool available to help me shed light upon my research question.
+
+```{r graph 1 prep, include=FALSE}
+####Loading and cleaning original dataset####
+
+#loading libraries
+library(tidyr)
+library(foreign)
+library(Synth) 
+library(xtable)
+library(tidyverse)
+library(rio)
+#library(tidylog)
+library(readxl)
+library(ggthemes)
+library(gridExtra)
+
+setwd("/Users/rodrigo/Documents/GitHub/scm-application-rodrigo-veiga")
+
+data.raw <- read.csv("data/Data.raw.csv")
+
+#datasets to be merged with the cleaned version of the one above:
+data.ttrade <- read.csv("data/Indonesia terms of trade.csv")
+
+
+#the plan is to clean the dataset and make it look like the one named "d" in the rep.r file under the CODING EXAMPLES folder
+#I will use data.raw as my starting point. once the new dataset based on data.raw looks similar to "d"'s format I will add the information on data.deficit as a new column
+
+data.clean <- data.raw
+
+#--
+#1. Renaming country column using colnames()
+colnames(data.clean)[colnames(data.clean) == "Country.Code"] <- "country"
+
+#--
+#2. Renaming country name column using colnames()
+colnames(data.clean)[colnames(data.clean) == "Country.Name"] <- "index"
+
+#--
+#3.Changing entries of the new index column to numbers (based on "d" format)
+data.clean$index[data.clean$index == "Argentina"] <- 1
+data.clean$index[data.clean$index == "Australia"] <- 2
+data.clean$index[data.clean$index == "Bolivia"] <- 3
+data.clean$index[data.clean$index == "Brazil"] <- 4
+data.clean$index[data.clean$index == "Bulgaria"] <- 5
+data.clean$index[data.clean$index == "Chile"] <- 6
+data.clean$index[data.clean$index == "China"] <- 7
+data.clean$index[data.clean$index == "Colombia"] <- 8
+data.clean$index[data.clean$index == "Costa Rica"] <- 9
+data.clean$index[data.clean$index == "Ecuador"] <- 10
+data.clean$index[data.clean$index == "Egypt, Arab Rep."] <- 11
+data.clean$index[data.clean$index == "Hungary"] <- 12
+data.clean$index[data.clean$index == "India"] <- 13
+data.clean$index[data.clean$index == "Indonesia"] <- 14
+data.clean$index[data.clean$index == "Iran, Islamic Rep."] <- 15
+data.clean$index[data.clean$index == "Lithuania"] <- 16
+data.clean$index[data.clean$index == "Malaysia"] <- 17
+data.clean$index[data.clean$index == "Mexico"] <- 18
+data.clean$index[data.clean$index == "Pakistan"] <- 19
+data.clean$index[data.clean$index == "Paraguay"] <- 20
+data.clean$index[data.clean$index == "Peru"] <- 21
+data.clean$index[data.clean$index == "Philippines"] <- 22
+data.clean$index[data.clean$index == "Poland"] <- 23
+data.clean$index[data.clean$index == "Romania"] <- 24
+data.clean$index[data.clean$index == "Russian Federation"] <- 25
+data.clean$index[data.clean$index == "South Africa"] <- 26
+data.clean$index[data.clean$index == "Thailand"] <- 27
+data.clean$index[data.clean$index == "Turkiye"] <- 28
+data.clean$index[data.clean$index == "Ukraine"] <- 29
+data.clean$index[data.clean$index == "United States"] <- 30
+data.clean$index[data.clean$index == "Uruguay"] <- 31
+data.clean$index[data.clean$index == "Venezuela, RB"] <- 32
+
+#--
+#4. now I need to reshape my dataset. It is originally in the wide format (where each year has its 
+#own column) and I want it to be on a long format, where I have a single column for years and 
+#a separate column for each variable type.
+
+#4.1 let's first rename our year columns
+# Renaming year column using colnames() and sub()
+colnames(data.clean) <- sub("^X(\\d{4})\\.\\.YR\\1\\.$", "\\1", colnames(data.clean))
+
+#4.2 deleting the series.code column
+data.clean.nocode <- subset(data.clean, select = -Series.Code)
+
+#4.3 transforming each column year into a column that contains the years
+data.clean.long <- gather(data.clean.nocode, key = "Year", value = "Value", "1970":"2022")
+
+#4.4 adjusting dataset above to make "" entries in country column to be NA entries
+data.clean.long$country <- replace(data.clean.long$country, data.clean.long$country == "", NA)
+
+#4.5 adjusting dataset above to remove rows that have NA in the country column
+data.clean.long2 <- data.clean.long[complete.cases(data.clean.long$country), ]
+
+#4.6 transforming the column series.name into several columns, each representing one variable
+data.clean.finalish <- spread(data.clean.long2,Series.Name,Value) #now this dataset has the same format as the one used by abadie (dataset "d")
+
+#--
+
+#5. Making my dataset have NAs in empty entries
+
+data.clean.finalish[data.clean.finalish == ".."] <- NA
+
+#--
+
+#6. Subsetting variables to be used in this version
+
+data.scm.v4.vars <- data.clean.finalish[, c("index", 
+                                            "country", 
+                                            "Year", 
+                                            "Agriculture, forestry, and fishing, value added (% of GDP)", 
+                                            "Central government debt, total (% of GDP)", 
+                                            "Exports of goods and services (constant 2015 US$)",
+                                            "Exports of goods and services (% of GDP)", #will use exports and imports as % of gdp summed in a variable called trade openness
+                                            "GDP per capita, PPP (constant 2017 international $)", 
+                                            "Gross capital formation (% of GDP)", 
+                                            "Imports of goods and services (constant 2015 US$)",
+                                            "Imports of goods and services (% of GDP)", #will use exports and imports as % of gdp summed in a variable called trade openness
+                                            "Industry (including construction), value added (% of GDP)", 
+                                            "Inflation, consumer prices (annual %)", 
+                                            "Net barter terms of trade index (2015 = 100)", 
+                                            "Official exchange rate (LCU per US$, period average)", 
+                                            "Unemployment, total (% of total labor force) (national estimate)")]
+
+#6.1 renaming columns
+
+data.scm.v4.vars <- data.scm.v4.vars %>%
+  rename(
+    year = Year,
+    agva = "Agriculture, forestry, and fishing, value added (% of GDP)",
+    debt = "Central government debt, total (% of GDP)",
+    exportsv2 = "Exports of goods and services (constant 2015 US$)",
+    exportspctv4 = `Exports of goods and services (% of GDP)`,
+    gdpcv2 = "GDP per capita, PPP (constant 2017 international $)",
+    gcfv4 = "Gross capital formation (% of GDP)",
+    importsv2 = "Imports of goods and services (constant 2015 US$)",
+    importspctv4 = `Imports of goods and services (% of GDP)`,
+    indva = "Industry (including construction), value added (% of GDP)",
+    infrate = "Inflation, consumer prices (annual %)",
+    termstrade = "Net barter terms of trade index (2015 = 100)",
+    exrate = "Official exchange rate (LCU per US$, period average)",
+    unempv2 = "Unemployment, total (% of total labor force) (national estimate)"
+  ) 
+
+#6.2 making stuff numeric
+conv_cols <- c("index",
+               "year",
+               "agva",
+               "debt",
+               "exportsv2",
+               "exportspctv4",
+               "gdpcv2",
+               "gcfv4",
+               "importsv2",
+               "importspctv4",
+               "indva",
+               "infrate",
+               "termstrade",
+               "exrate",
+               "unempv2"
+)
+
+data.scm.v4.vars <- data.scm.v4.vars %>% 
+  mutate_at(conv_cols, as.numeric)
+
+#6.3 Following SCM best practices and Abadie (2015), here I create the variable trade openness
+#Trade Openness: Exports plus Imports as percentage of GDP
+data.scm.v4.vars <- data.scm.v4.vars %>% 
+  mutate(tradeop = exportspctv4 + importspctv4)
+
+#--
+
+#7 Merging datasets
+
+#7.1 Adding updated Indonesia terms of trade info
+data.ttrade.merge <- data.ttrade %>% 
+  select(LOCATION, TIME, Value)
+
+data.scm.v4.vars.step7 <- data.scm.v4.vars %>%
+  mutate(termstrade = ifelse(country == "IDN" & year >= 1993 & year <= 2022,
+                             data.ttrade.merge$Value[match(year, data.ttrade.merge$TIME)],
+                             termstrade))
+#now the dataset has incorporated all the updated data and is ready for analysis
+
+#--
+
+#8. Getting data ready for graphs
+
+#subsetting only variable I will use for graphs here (gdpcv2)
+data.intro.graphs <- data.scm.v4.vars.step7 %>% 
+  select(index, country, year, gdpcv2)
+
+#subsetting into Brazil, Chile, Mexico, Argentina, and LaTam
+
+#Brazil
+data.brazil <- data.intro.graphs %>% 
+  filter(country == "BRA")
+
+#Chile
+data.chile <- data.intro.graphs %>% 
+  filter(country == "CHL")
+
+#Mexico
+data.mex <- data.intro.graphs %>% 
+  filter(country == "MEX")
+
+#Argentina
+data.arg <- data.intro.graphs %>% 
+  filter(country == "ARG")
+
+##LaTam##
+#selecting countries
+data.latam <- data.intro.graphs %>%
+  filter(country %in% c("ARG",
+                        "BOL", #took brazil out
+                        "CHL", 
+                        "COL", 
+                        "CRI", 
+                        "ECU", 
+                        "MEX", 
+                        "PRY", 
+                        "PER",
+                        "URY")) #original dataset has no information for venezuela
+unique(data.latam$country)
+
+#creating average
+data.lat.avg <- aggregate(gdpcv2 ~ year, data = data.latam, FUN = mean, na.rm = TRUE) #first year w/o na is 1990
+
+#subsetting others to start from 1990
+data.brazil.90 <- data.brazil %>% 
+  filter(year >= 1990)
+
+data.chile.90 <- data.chile %>% 
+  filter(year >= 1990)
+
+data.mex.90 <- data.mex %>% 
+  filter(year >= 1990)
+
+data.arg.90 <- data.arg %>% 
+  filter(year >= 1990)
+
+#creating one dataset out of that info
+final.data.intro.graphs <- data.lat.avg %>% 
+  rename(gdp.lat.avg = gdpcv2)
+
+#subsetting country-specific datasets
+br.tobind <- data.brazil.90 %>% 
+  select(gdpcv2) %>% 
+  rename(gdp.bra = gdpcv2)
+
+chile.tobind <- data.chile.90 %>% 
+  select(gdpcv2) %>% 
+  rename(gdp.chile = gdpcv2)
+
+arg.tobind <- data.arg.90 %>% 
+  select(gdpcv2) %>% 
+  rename(gdp.arg = gdpcv2)
+
+mex.tobind <- data.mex.90 %>% 
+  select(gdpcv2) %>% 
+  rename(gdp.mex = gdpcv2)
+
+#binding them into dataset I will use for the graphs
+this.for.graph <- cbind(final.data.intro.graphs, br.tobind, chile.tobind, arg.tobind, mex.tobind)
+
+#pivoting data in long format
+gdp_data_long <- this.for.graph %>%
+  pivot_longer(cols = starts_with("gdp"), names_to = "country", values_to = "gdp.per.capita")
+
+#--
+
+#9. PLOT OF GDP PER CAPITA OVER TIME 2000-2018 (Figure 1)
+gdp_data_long_0016 <- gdp_data_long %>% 
+  filter(year >= 2000 & year <= 2018)
+
+plot.0018.gdp <- ggplot(gdp_data_long_0016, aes(x = year, y = gdp.per.capita, color = country)) +
+  geom_line() +
+  labs(
+       x = "Year",
+       y = "GDP per capita, PPP (2017 int. $)",
+       title = "GDP Per Capita for Selected Countries",
+       color = "Country") +
+  scale_color_manual(values = c("lightblue", "green", "firebrick", "purple", "orange"), 
+                     name = "", 
+                     breaks = c("gdp.arg", "gdp.bra", "gdp.chile", "gdp.lat.avg", "gdp.mex"),
+                     labels = c("Argentina", "Brazil", "Chile", "LaTam Avg.", "Mexico")) +
+  theme_base() +
+  theme(axis.title = element_text(size = 12), plot.title = element_text(size = 15)) +
+  scale_x_continuous(breaks = c(2000,2002,2004,2006,2008,2010,2012,2014,2016,2018)) +
+  scale_y_continuous(breaks = c(12000,16000,20000,24000)) +
+  theme(axis.text.x = element_text(size = 10), axis.text.y = element_text(size = 10)) +
+  theme(legend.position = "bottom", plot.title.position = "panel") +
+  theme(axis.text.y = element_text(angle = 90, hjust = 0.5), legend.text = element_text(size = 11))
+
+plot.0018.gdp
+
+#-----
+
+#10. GROWTH TRENDS FOR SELECTED COUNTRIES (base 100 graph) (FIGURE 2)
+
+#filtering years in the graph
+gdp_data_long_0316 <- gdp_data_long %>% 
+  filter(year >= 2003 & year <= 2018)
+
+#normalizing base
+
+#for latam avg
+gdp_data_long_0316.latnorm <- gdp_data_long_0316 %>% 
+  filter(country == "gdp.lat.avg") 
+
+gdp_data_long_0316.latnorm <- gdp_data_long_0316.latnorm %>% 
+  mutate(gdp.per.capita = (gdp.per.capita/gdp_data_long_0316.latnorm$gdp.per.capita[1])*100)
+
+#for brazil
+gdp_data_long_0316.branorm <- gdp_data_long_0316 %>% 
+  filter(country == "gdp.bra") 
+
+gdp_data_long_0316.branorm <- gdp_data_long_0316.branorm %>% 
+  mutate(gdp.per.capita = (gdp.per.capita/gdp_data_long_0316.branorm$gdp.per.capita[1])*100)
+
+#for chile
+gdp_data_long_0316.chinorm <- gdp_data_long_0316 %>% 
+  filter(country == "gdp.chile") 
+
+gdp_data_long_0316.chinorm <- gdp_data_long_0316.chinorm%>% 
+  mutate(gdp.per.capita = (gdp.per.capita/gdp_data_long_0316.chinorm$gdp.per.capita[1])*100)
+
+#for argentina
+gdp_data_long_0316.argnorm <- gdp_data_long_0316 %>% 
+  filter(country == "gdp.arg") 
+
+gdp_data_long_0316.argnorm <- gdp_data_long_0316.argnorm %>% 
+  mutate(gdp.per.capita = (gdp.per.capita/gdp_data_long_0316.argnorm$gdp.per.capita[1])*100)
+
+#for mexico
+gdp_data_long_0316.mexnorm <- gdp_data_long_0316 %>% 
+  filter(country == "gdp.mex") 
+
+gdp_data_long_0316.mexnorm <- gdp_data_long_0316.mexnorm %>% 
+  mutate(gdp.per.capita = (gdp.per.capita/gdp_data_long_0316.mexnorm$gdp.per.capita[1])*100)
+
+#binding the above
+gdp_data_base100 <- rbind(gdp_data_long_0316.argnorm,
+                          gdp_data_long_0316.branorm,
+                          gdp_data_long_0316.chinorm,
+                          gdp_data_long_0316.latnorm) #taking mexico out    
+
+#creating graph
+plot.0316.base <- ggplot(gdp_data_base100, aes(x = year, y = gdp.per.capita, color = country)) +
+  geom_line() +
+  labs(
+       x = "Year",
+       y = "2003 GDP Per Capita = 100",
+       title = "GDP per Capita Growth Trends for Selected Countries",
+       color = "Country") +
+  scale_color_manual(values = c("lightblue", "firebrick", "green", "purple"), #
+                     name = "", 
+                     breaks = c("gdp.arg", "gdp.chile", "gdp.bra", "gdp.lat.avg"), #
+                     labels = c("Argentina", "Chile", "Brazil","LaTam Avg.")) + #    
+  theme_base() +
+  theme(axis.title = element_text(size = 12), plot.title = element_text(size = 15)) +
+  scale_x_continuous(breaks = c(2003,2006,2009,2012,2015,2018)) +
+  theme(axis.text.x = element_text(size = 10), axis.text.y = element_text(size = 10)) +
+  theme(legend.position = "bottom", plot.title.position = "panel") +
+  theme(axis.text.y = element_text(angle = 90, hjust = 0.5), legend.text = element_text(size = 11)) +
+  ylim(99, 151)
+
+plot.0316.base
+
+```
+
+```{r graph 1, echo=FALSE, results='markup', fig.cap='Figure 1. Notes: Latin American average is defined as the sum of GDP per capita values for Argentina, Bolivia, Chile, Colombia, Costa Rica, Ecuador, Mexico, Paraguay, Peru, and Uruguay, divided by the count of countries (10).'}
+plot.0018.gdp
+```
+
+In Figure 1, we see that Brazil starts the 2000s with GDP per capita levels significantly below that of Argentina, Chile, and Mexico. Brazil spends the following 11 years relatively in line with the Latin American average. It is never able to catch up with its selected peers (although it does get closer to Mexico). This is informative, but not a good base for comparison. 
+
+We can try to normalize this figure and focus on the 2003-2016 timeline during which the Workers Party uninterruptedly held the Presidency in Brazil. Figure 2 plots the PPP GDP per capita measured in 2017 international dollars normalized to 2003 levels. One can see that the Brazilian GDP per capita growth path had a steep decline after 2013, culminating in one of the worst economic crises of the country’s history, with a 4.4% decline in GDP per capita in 2015.
+
+```{r graph 2, echo=FALSE, results='markup', fig.cap="Figure 2. Notes: Each country's yearly GDP per capita value is divided by its 2003 value. The Latin American average is defined in Figure 1 and normalized in the same manner described above."}
+plot.0316.base
+```
+
+When we observe the growth trends starting with the same normalized base in 2003, one can conclude that the statement that "a Brazilian take-off" is probably not the best definition for what happened in the period. Brazil lags behind the Latin American average, Chile, and Argentina.
+
+The table below summarizes 2000-2005 country-average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil. 
+
+```{latex, echo=FALSE, results='markup'}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrlr}
+  \hline
+ Country & GDP per capita & Country & GDP per capita \\ 
+  \hline
+BGR & 12485.5 & MEX & 17632.5 \\ 
+  BOL & 5418.2 & PAK & 3524.5 \\ 
+  CHL & 16636.7 & PER & 6768.7 \\ 
+  CHN & 4290.2 & POL & 17276.3 \\ 
+  COL & 9489.5 & PRY & 8821.2 \\ 
+  CRI & 13237.5 & TUR & 15750.2 \\ 
+  ECU & 8771.5 & UKR & 9401 \\ 
+  EGY & 8107 & URY & 13942.2 \\ 
+  IND & 2840.3 & ZAF & 11285.7 \\ 
+  IRN & 12207.5 & BRA & 11887.8 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+```
+
+\centering 
+![](table1.png){width=70%} 
+
+```{r table 1 caption, echo=FALSE, results='markup', fig.cap="Table 1: GDP per Capita Averages. Notes: GDP per capita is averaged for the 2000-2005 period and in PPP 2017 international $."}
+
+```
+
+The table and the two figures above indicate that there was a negative impact in the Brazilian GDP per capita trend. But these three pieces do not connect it to the NEM. Comparative measures across different countries or even regional averages are not optimal. Our goal should not be to compare Brazil to any one other country, since it is clear that none of the lines above follow Brazil's trend during our pre-intervention period, so we cannot draw an informative conclusion on why Brazil has under performed or even if it has under performed at all. Maybe this trend was the best that the Brazilian economy could do in this period. In order to perform a more sound analysis, we must get as close as possible to constructing a precise counterfactual to the Brazilian economy where the only difference is that such counterfactual was not exposed to the NEM. This is where the synthetic control method comes in, the topic of the final section of this extended research proposal.
+
+## 4- Research Design
+
+Following @abadie2015comparative, I close this research proposal by describing the mathematical model of the synthetic control method and explain how it provides a preliminary test for or against the validity of the hypothesis described above. 
+
+The intuition for the SCM is quite simple. When our units of analysis are a few aggregate entities (e.g. countries in a yearly panel), a combination of comparison units often does a better job of reproducing the characteristics of the unit of interest than any single comparison unit alone. Therefore, the result of our model is a synthetic control that is selected as the weighted average of all potential comparison units that **best resembles the characteristics of the unit of interest** in the **preintervention** period. 
+
+Let's dive into the setup of the model by defining our parameters.
+
+### The setup of the SCM
+
+We have a sample of $J + 1$ countries where $j = 1$ is our country of interest (Brazil) and $j = 2,..., J + 1$ are our potential comparison units (the 19 other countries in our sample).
+
+All our units are observed at the same time periods $t = 1,..., T$. There is a positive number of preintervention periods ($T_0$) and postintervention periods ($T_1$) such that $T = T_0 + T_1$. 
+
+$j = 1$ is exposed to the intervention on periods $T_0 + 1,..., T$ and the intervention has no effect on $j = 1$ during periods $1,..., T_0$.
+
+Our synthetic control will be composed of two key parameters: the weights assigned to the units of comparison (denoted as $w$) and the weights assigned to the covariates (also called the predictors of our variable of interest in SCM literature and denoted as $v$). The goal is to construct a synthetic control that resembles, as best as possible, the trend of the variable of interest (e.g. GDP per capita) of our unit of interest during the preintervention period.
+
+The weights assigned to the comparison units are described by a $(J \times 1)$ vector of weights $W$, where:
+
+$W\ =\ (w_2,..., w_{J+1})'$ ($'$ denotes the transpose of the vector)
+
+Such that $0 \le w_j \le 1$ for $j=2,..., J+1$ and $w_2\ +\ ...\ +\ w_{J+1}\ =\ 1$
+
+The weights assigned to our covariates are specifically denoted as $v_m$, where we have $m\ =\ 1,..., k$ covariates in the study and are also normalized to sum to 1.
+
+Let $X_1$ be a $(k \times 1)$ vector containing the values of **preintervention** variables of the **unit of interest** that we aim to match as closely as possible.
+
+And let $X_0$ be a $(k \times J)$ matrix collecting the values of **the same preintervention variables** for the **comparison units**.
+
+Therefore, the difference between preintervention characteristics of the unit of interest and the synthetic control is given by the vector $X_1\ -\ X_0W$. We select the synthetic control $W^*$ that minimizes the size of this difference.
+
+The last parameter we must define addresses our variable of interest (think, again, of GDP per capita). We let $Y_{jt}$ be the variable of interest of unit $j$ at time $t$.
+
+We are now ready to derive our synthetic control.
+
+### Deriving the synthetic control
+
+In order to avoid the dangers of overfitting while still minimizing out-of-sample prediction errors, the first step in the derivation is to emply a cross-validation technique to choose the weights $v_m$.
+
+We divide the pretreatment period into a training period (I will use 1990-2001) and a validation period (I will use 2002-2006). Using the covariates measured in the training period, we select the weights $v_m$ such that the result minimizes the root mean square prediction error of the validation period:
+
+$$
+\min(RMSPE)=\min((\frac{1}{T_0}\sum^{T_0}_{t=1}(Y_{1t}-\sum_{j=2}^{J+1}w^{*}_{j}Y_{jt})^{2})^{\frac{1}{2}})
+$$
+
+Now, we apply the the $v_m$ weights derived above and choose $W^*$ as the value that solves:
+
+$$
+\min(\sum^{k}_{m=1}v_m(X_{1m}-X_{0m}W)^2)
+$$
+
+This results in a synthetic control that approximates as best as mathematically possible the preintervention trend of GDP per capita in Brazil. If the resulting synthetic control has a preintervention GDP per capita trend that is similar to Brazil's, we will have succeed in our goal of building a reliable counterfactual to the Brazilian economy. Thus, since our counterfactual is a relibale synthetic version of the Brazilian economy during the preintervention period, but is not exposed to the intervention of interest during the postintervention period, we are able to estimate the effect of the intervention of interest on GDP per capita in Brazil as the difference in GDP per capita levels between Brazil and its synthetic counterpart in the years following the intervention.
+
+In mathematical terms and following the definition of $Y_{jt}$ above, the synthetic control estimator of the effect of the treatment in any post intervention period $t=T_0+1,...T$ is given by the comparison between the variable of interest for the unit of interest and the variable of interest for the synthetic control at that period:
+
+$$
+Y_{1t}-\sum^{J+1}_{j=2}w^{*}_{j}Y_{jt}
+$$
+
+The derivation above does not mention many of the technical details that corroborate for the validity of the SCM in constructing a reliable counterfactual to our country of interest. I am more than happy to dive deeper into these details in our subsequent submissions if you judge that to be necessary.
+
+### A word on the choice of covariates
+
+The model for synthetic controls mathematically assigns weights to the comparison units and to the covariates of choice to provide the best possible approximation of the trend in the country of interest's variable of interest during the pre-intervention period. In this study, the variable of interest is PPP GDP per capita measured in constant 2017 international \$. @abadie2015comparative state that it is of crucial importance that synthetic controls closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention^[See @abadie2021using, @abadie2015comparative, and @botosaru2019role for proofs of why a perfect reproduction is not required.].
+
+My choice of covariates (listed in part 3) follows what @abadie2015comparative and @carrasco2014decada have defined as variables that are part of a standard set of economic growth predictors. However, in contrast to @carrasco2014decada, I opt to follow mainstream SCM literature and only include quantitative variables in my list of covariates.
+
+### Main assumption and threats to inference
+
+Having defined the period of analysis, the comparison units, and the covariates, the main assumption of the model is as follows: 
+
+Only units that are alike in both observed and unobserved determinants of the variable of interest, as well as in the effect of those determinants upon such variable, should produce similar trajectories of the variable of interest over extended periods of time. Once it has been established that the country of interest and the synthetic control unit have similar behavior over extended periods prior to the intervention, a discrepancy in the variable of interest in the post-intervention period is interpreted as produced by the intervention itself^[See @abadie2003economic, @abadie2010synthetic, @abadie2015comparative, @abadie2021using, @abadie2022synthetic, and @botosaru2019role for proofs and in-depth explanations.].
+
+Based on the above and the intense active discussions in academia regarding the inferential validity of synthetic control, I must discuss three important considerations. 
+
+(1) On the upside, mathematical proofs show that synthetic controls with a very close fit between the counterfactual and the unit of interest control for the impacts of unobserved confounders. In other words, confounders that affect both Brazil and its counterfactual are taken into account in the derivation of the model. Note, however, that if another event/intervention that had its start in 2006 is what is actually impacting the GDP per capita trend in Brazil we would be unable to differentiate its impact from the impact of the NEM. One variable that fits this timeline and might have had a negative impact in the Brazilian economy is the perception of the level of corruption in the country. Starting in 2005, several corruption schemes were discovered, which might have affected domestic investment, foreign direct investment, and confidence towards governmental institutions.
+
+(2) If the synthetic control does not closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention and/or does not produce a similar trajectory of the variable of interest in comparison to Brazil over extended periods of time the resulting counterfactual fails to respect the main assumptions and, therefore, cannot be used as evidence for a causal relationship. This is the case in @carrasco2014decada and @balassiano2018recessao. In both papers, the authors do not present evidence showing how well the syntehtic control reproduces the pre-intervention values of covariates. Furthermore, both papers fail to derive a counterfactual with a similar pre-intervention trajectory of the variable of interest.
+
+(3) Traditional exercises that test for levels of statistical inference and significance are not possible within the framework of SCM. There are, however, tests that measure the significance and robustsness of the results derived with synthetic controls. This leads our next sub-section.
+
+### Inference tests and empirical extension
+
+Following @abadie2010synthetic, @abadie2015comparative, and @abadie2021using, I will perform two different inference tests as empirical extensions to evaluate the credibility of my results in my final submission. If my model passes these tests, this adds credibility and trustworthiness to my results. Additionally, I will perform one additional empirical extension by deriving an alternative synthetic control model that measures the impact of the NEM on a different variable of interest. 
+
+#### Placebo study
+
+An in-space placebo study reassigns the treatment in the data to each one of the comparison units. This will allow me to obtain synthetic control estimates for countries that did not experience the event of interest, namely the New Economic Matrix. While some countries in our pool were exposed to similar versions of some of the policies related to the NEM, nowhere did the policy-making strategy embrace as many aspects of economic policy and represent such a clear break with previous trends as in Brazil.
+
+Applying the synthetic control estimation process to each of our comparison units in the country pool allows for the comparison of the estimated effect of the NEM in Brazil to the distribution of placebo effects obtained for other countries. This is done by comparing the ratios of post-intervention RMSPE and pre-intervention RMSPE for Brazil and for all the units in the country pool. Recall that the RMSPE measures the lack of fit between the path of the variable of interest (in this case, GDP per capita) for a particular country and its synthetic counterpart. I argue that Brazil was the only country that underwent the intervention characterized by the New Economic Matrix. Therefore, the effect of the NEM on the Brazilian economy will be considered significant if the resulting RMSPE ratio for Brazil is large compared to the distribution for the placebo effects^[See @abadie2015comparative for details on RMSPE ratio placebo study.].
+
+#### Robustness test
+
+The objective of the robustness test is to check the sensitivity of my main results to changes in the country weights, $W^*$. I will iteratively re-estimate the model to construct a counterfactual of Brazil, omitting in each iteration one of the countries that were assigned at least 10\% weights in my main model. According to @abadie2015comparative, by excluding countries that received a large positive weight, we sacrifice some of the goodness of the pre-intervention fit, but this sensitivity check allows for the evaluation of the extent to which results are driven by any particular control country^[Also see @abadie2021using for details on the robustness test.]. If the resulting trend of the impact of the NEM is similar for all the models that create a counterfactual without using one of high weight countries in the main model, this shows that the results are robust to the exclusion of any particular country that was assigned a high predictive weight in main counterfactual.
+
+#### Empirical Extension
+
+This third empirical extension has proved to be a challenge. Due to the data requirements for the application of synthetic controls, it has proved to be challenging to find another variable with sufficient data availability across the entirety of my country pool to be used as an alternative variable of interest. The variables I am currently considering to be the object of study of this task are: Inflation rate, Human capital index, and Poverty headcount ratio at $3.65 a day (2017 PPP) (% of population).
+
+## Next Steps (mainly notes for myself)
+
+- Formatting to-dos on the website
+
+- Review my code and run the main synthetic control model
+
+- Review my code and run the inference tests
+
+- Make a final decision on the variable for the empirical extension. Run model with that as variable of interest and report results
+
+- Learn how to create tables in qmd that correctly render into the website
+
+## My questions
+
+- How to I change the main title of my website in the top left part? It currently shows "scm-application-rodrigo-veiga" which is the name of the folder inside my git and the name of my Rproj file.
+
+- How do I add the hyperlink that you have in the bottom right of all your website pages which takes the reader directly to the git repository that created the site?
+
+- How do I properly create tables in a qmd file that render correctly into the website? I tried using the Xtable function or just writing LaTex syntax as I usually do in rmd files (and it works perfectly there), but that did not work in this qmd, so I had to add an image of the table.
+
+end of the assignment :)
+

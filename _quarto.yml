@@ -3,14 +3,19 @@ project:
   output-dir: docs
 
 website:
-  title: "scm-application-rodrigo-veiga"
+  title: "Rodrigo Veiga"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
-      - 3200-fp-research-design.qmd
-      - 3200-fp-research-design-expanded.qmd
+      - fp-research-design.qmd
+      - fp-research-design-expanded.qmd
+      - final-submission.qmd
+  page-footer: 
+    right: |
+        Made with R and [Quarto](https://quarto.org/)<br>
+        [View the source at {{< fa brands github >}} GitHub](https://github.com/rveigac/scm-application-rodrigo-veiga)
 
 format:
   html:
