@@ -94,7 +94,7 @@ The covariates above will be used to match the pre-intervention GDP per capita t
 
 **Pre-intervention period**: 1990 - 2005
 
-There is one possible, although minor, limitation that the reader must the aware of. The results derived below do not take the 1995 values of the variables for any of the comparison units and Brazil into consideration when performing the calculations. This year is full of idiosyncratic and volatile shocks that had short-term impacts in some of our units^[For example, the Mexican Peso crisis. See https://www.federalreserve.gov/pubs/bulletin/1996/396lead.pdf]. Note, however, that this does not undermine the validity of the analysis. This is simply an attempt to allow for a larger numbar of pre-intervention periods than in @carrasco2014decada, while still constructing results that are not noised by short-term idiosyncratic shocks. Furthermore, as highlighted by @abadie2015comparative [p. 497], the mathematical model of synthetic control derivations does not require the sample periods to be equidistant in time.
+There is one minor limitation that the reader must the aware of. The results derived below do not take the 1995 values of the variables for any of the comparison units and Brazil into consideration when performing the calculations. This year is full of idiosyncratic and volatile shocks that had short-term impacts in some of our units^[For example, the Mexican Peso crisis. See https://www.federalreserve.gov/pubs/bulletin/1996/396lead.pdf]. Note, however, that this does not undermine the validity of the analysis. This is simply an attempt to allow for a larger numbar of pre-intervention periods than in @carrasco2014decada, while still constructing results that are not noised by short-term idiosyncratic shocks. Furthermore, as highlighted by @abadie2015comparative [p. 497], the mathematical model of synthetic control derivations does not require the sample periods to be equidistant in time.
 
 **Post-intervention period**: 2006 (intervention year) - 2018 (the last year before Jair Bolsonaro, the winner of the 2018 Presidential Elections, took over as President).
 
@@ -211,7 +211,7 @@ data.clean.finalish[data.clean.finalish == ".."] <- NA
 
 #6. Subsetting variables to be used in this version
 
-data.scm.v4.vars <- data.clean.finalish[, c("index", 
+data.v6.vars <- data.clean.finalish[, c("index", 
                                             "country", 
                                             "Year", 
                                             "Agriculture, forestry, and fishing, value added (% of GDP)", 
@@ -230,22 +230,19 @@ data.scm.v4.vars <- data.clean.finalish[, c("index",
 
 #6.1 renaming columns
 
-data.scm.v4.vars <- data.scm.v4.vars %>%
+data.v6.vars <- data.v6.vars %>%
   rename(
     year = Year,
     agva = "Agriculture, forestry, and fishing, value added (% of GDP)",
     debt = "Central government debt, total (% of GDP)",
-    exportsv2 = "Exports of goods and services (constant 2015 US$)",
-    exportspctv4 = `Exports of goods and services (% of GDP)`,
-    gdpcv2 = "GDP per capita, PPP (constant 2017 international $)",
-    gcfv4 = "Gross capital formation (% of GDP)",
-    importsv2 = "Imports of goods and services (constant 2015 US$)",
-    importspctv4 = `Imports of goods and services (% of GDP)`,
+    exportspct = "Exports of goods and services (% of GDP)",
+    gdpc = "GDP per capita, PPP (constant 2017 international $)",
+    gcf = "Gross capital formation (% of GDP)",
+    importspct = "Imports of goods and services (% of GDP)",
     indva = "Industry (including construction), value added (% of GDP)",
     infrate = "Inflation, consumer prices (annual %)",
     termstrade = "Net barter terms of trade index (2015 = 100)",
-    exrate = "Official exchange rate (LCU per US$, period average)",
-    unempv2 = "Unemployment, total (% of total labor force) (national estimate)"
+    unemp = "Unemployment, total (% of total labor force) (national estimate)"
   ) 
 
 #6.2 making stuff numeric
@@ -253,26 +250,27 @@ conv_cols <- c("index",
                "year",
                "agva",
                "debt",
-               "exportsv2",
-               "exportspctv4",
-               "gdpcv2",
-               "gcfv4",
-               "importsv2",
-               "importspctv4",
+               "exportspct",
+               "gdpc",
+               "gcf",
+               "importspct",
                "indva",
                "infrate",
                "termstrade",
-               "exrate",
-               "unempv2"
-)
+               "unemp"
+               )
 
-data.scm.v4.vars <- data.scm.v4.vars %>% 
+data.v6.vars <- data.v6.vars %>% 
   mutate_at(conv_cols, as.numeric)
 
 #6.3 Following SCM best practices and Abadie (2015), here I create the variable trade openness
 #Trade Openness: Exports plus Imports as percentage of GDP
-data.scm.v4.vars <- data.scm.v4.vars %>% 
-  mutate(tradeop = exportspctv4 + importspctv4)
+data.v6.vars <- data.v6.vars %>% 
+  mutate(tradeop = exportspct + importspct)
+
+#6.4 Following SCM best practices and Abadie (2015), here I am rounding GDP per capita
+data.v6.vars <- data.v6.vars %>% 
+  mutate(gdpc = round(gdpc))
 
 #--
 
@@ -282,19 +280,20 @@ data.scm.v4.vars <- data.scm.v4.vars %>%
 data.ttrade.merge <- data.ttrade %>% 
   select(LOCATION, TIME, Value)
 
-data.scm.v4.vars.step7 <- data.scm.v4.vars %>%
+data.v6.vars.step7 <- data.v6.vars %>%
   mutate(termstrade = ifelse(country == "IDN" & year >= 1993 & year <= 2022,
                              data.ttrade.merge$Value[match(year, data.ttrade.merge$TIME)],
                              termstrade))
 #now the dataset has incorporated all the updated data and is ready for analysis
+data.v6 <- data.v6.vars.step7
 
 #--
 
 #8. Getting data ready for graphs
 
 #subsetting only variable I will use for graphs here (gdpcv2)
-data.intro.graphs <- data.scm.v4.vars.step7 %>% 
-  select(index, country, year, gdpcv2)
+data.intro.graphs <- data.v6 %>% 
+  select(index, country, year, gdpc)
 
 #subsetting into Brazil, Chile, Mexico, Argentina, and LaTam
 
@@ -330,7 +329,7 @@ data.latam <- data.intro.graphs %>%
 unique(data.latam$country)
 
 #creating average
-data.lat.avg <- aggregate(gdpcv2 ~ year, data = data.latam, FUN = mean, na.rm = TRUE) #first year w/o na is 1990
+data.lat.avg <- aggregate(gdpc ~ year, data = data.latam, FUN = mean, na.rm = TRUE) #first year w/o na is 1990
 
 #subsetting others to start from 1990
 data.brazil.90 <- data.brazil %>% 
@@ -347,24 +346,24 @@ data.arg.90 <- data.arg %>%
 
 #creating one dataset out of that info
 final.data.intro.graphs <- data.lat.avg %>% 
-  rename(gdp.lat.avg = gdpcv2)
+  rename(gdp.lat.avg = gdpc)
 
 #subsetting country-specific datasets
 br.tobind <- data.brazil.90 %>% 
-  select(gdpcv2) %>% 
-  rename(gdp.bra = gdpcv2)
+  select(gdpc) %>% 
+  rename(gdp.bra = gdpc)
 
 chile.tobind <- data.chile.90 %>% 
-  select(gdpcv2) %>% 
-  rename(gdp.chile = gdpcv2)
+  select(gdpc) %>% 
+  rename(gdp.chile = gdpc)
 
 arg.tobind <- data.arg.90 %>% 
-  select(gdpcv2) %>% 
-  rename(gdp.arg = gdpcv2)
+  select(gdpc) %>% 
+  rename(gdp.arg = gdpc)
 
 mex.tobind <- data.mex.90 %>% 
-  select(gdpcv2) %>% 
-  rename(gdp.mex = gdpcv2)
+  select(gdpc) %>% 
+  rename(gdp.mex = gdpc)
 
 #binding them into dataset I will use for the graphs
 this.for.graph <- cbind(final.data.intro.graphs, br.tobind, chile.tobind, arg.tobind, mex.tobind)
@@ -487,42 +486,111 @@ We can try to normalize this figure and focus on the 2003-2016 timeline during w
 plot.0316.base
 ```
 
-When we observe the growth trends starting with the same normalized base in 2003, one can conclude that the statement that "a Brazilian take-off" is probably not the best definition for what happened in the period. Brazil lags behind the Latin American average, Chile, and Argentina.
+When taking both figures and the historic trend of Brazilian GDP per capita^[See the following for an expanded timeline of Figure 1: https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD?end=2022&locations=BR-AR-CL-MX&start=1990] into consideration, one is led to conlude that the take-off affirmation is, at best, relative. Compared to the Brazilian trends of the 1980s and 1990s, the 2003-2013 period can indeed characterize as a take-off. The growth trajectory in this period is much steadier and positive than in previous decades. Compared to its Latin American peers, however, the best definition would perhaps be an attempt to catch-up. Figure 2 shows that, even though the growth trend is more promising than that of the late twentieth century, Brazil still has the slowest growth trajectory when compared to Argentina, Chile, and the Latin American average.
 
-The table below summarizes 2000-2005 country-average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil. 
+The table below summarizes 2000-2005 country-average and the country-growth rate average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil. 
 
-```{latex, echo=FALSE, results='markup'}
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{lrlr}
-  \hline
- Country & GDP per capita & Country & GDP per capita \\ 
-  \hline
-BGR & 12485.5 & MEX & 17632.5 \\ 
-  BOL & 5418.2 & PAK & 3524.5 \\ 
-  CHL & 16636.7 & PER & 6768.7 \\ 
-  CHN & 4290.2 & POL & 17276.3 \\ 
-  COL & 9489.5 & PRY & 8821.2 \\ 
-  CRI & 13237.5 & TUR & 15750.2 \\ 
-  ECU & 8771.5 & UKR & 9401 \\ 
-  EGY & 8107 & URY & 13942.2 \\ 
-  IND & 2840.3 & ZAF & 11285.7 \\ 
-  IRN & 12207.5 & BRA & 11887.8 \\ 
-   \hline
-\end{tabular}
-\end{table}
+```{r table 1, echo=FALSE, results='markup', fig.cap="Table 1. Notes: GDP per capita is averaged for the 2000-2005 period and in PPP 2017 international $. The growth rate average is the average of the yearly GDP per capita growth rates during the 2000-2005 period."}
+#10. Here I will subset the main dataset to construct Table 1 using the kableExtra package
 
+#10.1 Subsetting countries I will use for this table and the final analysis of my analysis 
+#This version will use the country list described in step 0
+#List: BOL, BRA, BGR, CHL, CHN, COL, CRI, ECU, EGY, IND, IRN, MEX, PAK, PRY, PER, POL, ZAF, TUR, UKR, URY
+
+data.v6 <- data.v6[data.v6$country %in% c("BOL", 
+                                          "BRA", 
+                                          "BGR", 
+                                          "CHL", 
+                                          "CHN", 
+                                          "COL", 
+                                          "CRI", 
+                                          "ECU", 
+                                          "EGY", 
+                                          "IND", 
+                                          "IRN",
+                                          "MEX",
+                                          "PAK", 
+                                          "PRY",
+                                          "PER",
+                                          "POL",
+                                          "ZAF",
+                                          "TUR",
+                                          "UKR",
+                                          "URY"), ]
+
+#checking
+#length(unique(data.v6$country))
+#unique(data.v6$country)
+
+#arranging rows in alphabetical order of country names
+data.v6 <- data.v6 %>% arrange(country)
+#unique(data.v6$country)
+
+#10.2 Subsetting periods and variable of interest for building table 1
+t1_subset <- data.v6 %>% 
+  select(country, gdpc, year) %>% 
+  filter(year >= 2000 & year <= 2005)
+
+#10.3 creating GDP per capita averages
+t1_avgs <- t1_subset %>% 
+  group_by(country) %>% 
+  summarise(gdpc = mean(gdpc))
+
+t1_avgs$gdpc <- round(t1_avgs$gdpc,1)
+
+#10.4 Creating GDP per capita growth averages
+t1_subset_long <- t1_subset %>% 
+  pivot_wider(names_from = year,
+              values_from = gdpc)
+
+t1_subset_long <- t1_subset_long %>% 
+  rename(yr00 = '2000',
+         yr01 = '2001',
+         yr02 = '2002',
+         yr03 = '2003',
+         yr04 = '2004',
+         yr05 = '2005')
+
+t1_subset_long <- t1_subset_long %>%
+  mutate(grate01 = ((yr01-yr00)/yr00)*100,
+         grate02 = ((yr02-yr01)/yr01)*100,
+         grate03 = ((yr03-yr02)/yr02)*100,
+         grate04 = ((yr04-yr03)/yr03)*100,
+         grate05 = ((yr05-yr04)/yr04)*100)
+
+t1_subset_long <- t1_subset_long %>%
+  rowwise() %>% 
+  mutate(avg.grate = mean(c(grate01, grate02, grate03, grate04, grate05)))
+
+#10.5 Creating df to be used to create table 1
+t1_subset_long_totable <- t1_subset_long %>% 
+  select(avg.grate)
+
+t1_totable <- cbind(t1_avgs, t1_subset_long_totable)
+
+#arranging order of rows according to gdp per capita, as suggested
+t1_totable <- t1_totable %>%
+  arrange(desc(gdpc))
+
+#10.6 Creating table 
+t1 <- t1_totable %>%
+  select(country, gdpc, avg.grate) %>%
+  kbl(caption="GDP per Capita Averages and Growth Averages for Selected Countries",
+      format= "html", #we can change this to "latex" and delete "Table 1" to title (latex automatically includes table count)      
+      col.names = c("Country","GDP per Capita", "Growth Rate Avg."),
+      align = c("l", "r", "r"), #if align = NULL, numeric columns are right-aligned, and other columns are left-aligned
+      longtable = T,
+      tabular = "longtable",
+      digits = 3,
+      booktabs = T) %>%
+  kable_classic(full_width = F, html_font = "helvetica")
+t1
 ```
 
-\centering 
-![](table1.png){width=70%} 
+The table and the two figures above indicate that comparative measures across different countries or even regional averages are not optimal. Our goal should not be to compare Brazil to any one other country, since it is clear that none of the lines above follow Brazil's trend during our pre-intervention period. Therefore, we cannot draw an informative conclusion on why Brazil has under performed or even if it has under performed at all. Maybe this trend was the best that the Brazilian economy could do in this period. In order to perform a more sound analysis, we must get as close as possible to constructing a precise counterfactual to the Brazilian economy where the only difference is that such counterfactual was not exposed to the NEM. This is where the synthetic control method comes in, the topic of the remaining sections of the Research Design chapter.
 
-```{r table 1 caption, echo=FALSE, results='markup', fig.cap="Table 1: GDP per Capita Averages. Notes: GDP per capita is averaged for the 2000-2005 period and in PPP 2017 international $."}
-
-```
-
-The table and the two figures above indicate that there was a negative impact in the Brazilian GDP per capita trend. But these three pieces do not connect it to the NEM. Comparative measures across different countries or even regional averages are not optimal. Our goal should not be to compare Brazil to any one other country, since it is clear that none of the lines above follow Brazil's trend during our pre-intervention period, so we cannot draw an informative conclusion on why Brazil has under performed or even if it has under performed at all. Maybe this trend was the best that the Brazilian economy could do in this period. In order to perform a more sound analysis, we must get as close as possible to constructing a precise counterfactual to the Brazilian economy where the only difference is that such counterfactual was not exposed to the NEM. This is where the synthetic control method comes in, the topic of the final section of this extended research proposal.
+Finally, CONTINUE FROM HERE: SUMMARIZING THE COVARIATE VALUES IN 2005 ACROSS OUR COUNTRY SAMPLE
 
 ### The setup of the SCM
 
