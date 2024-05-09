@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Rodrigo Veiga">
-<meta name="dcterms.date" content="2024-05-08">
+<meta name="dcterms.date" content="2024-05-09">
 
 <title>Rodrigo Veiga - Final Submission</title>
 <style>
@@ -4904,7 +4904,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 8, 2024</p>
+      <p class="date">May 9, 2024</p>
     </div>
   </div>
   
@@ -4946,7 +4946,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <h3 class="anchored" data-anchor-id="data-and-sample">Data and Sample</h3>
 <p>The unit of analysis will be a country-year panel. I collected data from the World Bank’s World Development Indicators (WDI) dataset. While the World Bank produces a lot of the data points present in my final dataset, the OECD, IMF, UN, and ILO are the primary sources for some of the variables present in the WDI that are part of my model. Additionally, I collected additional data for Terms of Trade directly from the OECD’s National Accounts at a Glance dataset and merged it with my WDI dataset. My raw dataset is composed of 35 countries and 72 variables over the 1970-2022 period. After extensive research and analysis, I have decided that my synthetic control model will be based on a sample of 20 countries and 8 variables over the 1990-2018 period. Details are provided below.</p>
 <p><strong>Country of interest:</strong> Brazil.</p>
-<p><strong>Country pool/comparison units</strong> (that will be fed into the model to create the synthetic control): Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Türkiye, Ukraine, Uruguay.</p>
+<p><strong>Country pool/comparison units</strong> (that will be fed into the model to create the synthetic control): Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Türkiye, Ukraine, and Uruguay.</p>
 <p><strong>Variable of interest:</strong> GDP per capita, PPP (constant 2017 international $).</p>
 <p><strong>Covariates:</strong> Agriculture, forestry, and fishing, value added (% of GDP); GDP per capita, PPP (constant 2017 international $); Gross capital formation (% of GDP); Industry (including construction), value added (% of GDP); Inflation, consumer prices (annual %); Net barter terms of trade index (2015 = 100); Trade Openness (% of GDP) (defined as Exports of goods and services (% of GDP) + Imports of goods and services (% of GDP), following <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span> and the concept of additive indexes we learned in class); and Unemployment, total (% of total labor force) (national estimate).</p>
 <p>The covariates above will be used to match the pre-intervention GDP per capita trend of the synthetic counterfactual with that of Brazil.</p>
@@ -4982,13 +4982,13 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 </div>
 </div>
 <p>When taking both figures and the historic trend of Brazilian GDP per capita<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> into consideration, one is led to conlude that the take-off affirmation is, at best, relative. Compared to the Brazilian trends of the 1980s and 1990s, the 2003-2013 period can indeed characterize as a take-off. The growth trajectory in this period is much steadier and positive than in previous decades. Compared to its Latin American peers, however, the best definition would perhaps be an attempt to catch-up. Figure 2 shows that, even though the growth trend is more promising than that of the late twentieth century, Brazil still has the slowest growth trajectory when compared to Argentina, Chile, and the Latin American average.</p>
-<p>The table below summarizes 2000-2005 country-average and the country-growth rate average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil.</p>
+<p>The table below summarizes the 2000-2005 country average and the country growth rate average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil.</p>
 <div class="cell">
 <div class="cell-output-display">
 
 <table class=" lightable-classic" style="font-family: helvetica; width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-GDP per Capita Averages and Growth Averages for Selected Countries
+GDP per Capita Averages and Growth Averages
 </caption>
 <thead>
 <tr>
@@ -5227,11 +5227,200 @@ IND
 </tbody>
 
 </table>
-<p>Table 1. Notes: GDP per capita is averaged for the 2000-2005 period and in PPP 2017 international $. The growth rate average is the average of the yearly GDP per capita growth rates during the 2000-2005 period.</p>
+<p><span style="font-size: smaller; color: gray;">Table 1. Notes: GDP per capita is averaged for the 2000-2005 period and in PPP 2017 international $. The growth rate average is the average of the yearly GDP per capita growth rates during the 2000-2005 period.</span></p>
 </div>
 </div>
 <p>The table and the two figures above indicate that comparative measures across different countries or even regional averages are not optimal. Our goal should not be to compare Brazil to any one other country, since it is clear that none of the lines above follow Brazil’s trend during our pre-intervention period. Therefore, we cannot draw an informative conclusion on why Brazil has under performed or even if it has under performed at all. Maybe this trend was the best that the Brazilian economy could do in this period. In order to perform a more sound analysis, we must get as close as possible to constructing a precise counterfactual to the Brazilian economy where the only difference is that such counterfactual was not exposed to the NEM. This is where the synthetic control method comes in, the topic of the remaining sections of the Research Design chapter.</p>
-<p>Finally, CONTINUE FROM HERE: SUMMARIZING THE COVARIATE VALUES IN 2005 ACROSS OUR COUNTRY SAMPLE</p>
+<p>Finally, let’s quickly visualize the summary statistics of the covariates for the sample in comparison to Brazil. The table below shows, for the last pre-intervention period, the mean, max, min, and standard deviation values for all countries in the sample (including Brazil), as well as the values of the same variables for Brazil in this same year.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: helvetica; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Summary Statistics for 2005
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Agriculture v.a.
+</th>
+<th style="text-align:right;">
+GDP/capita
+</th>
+<th style="text-align:right;">
+GCF
+</th>
+<th style="text-align:right;">
+Industry v.a.
+</th>
+<th style="text-align:right;">
+Inflation
+</th>
+<th style="text-align:right;">
+Terms of Trade
+</th>
+<th style="text-align:right;">
+Trade Op.
+</th>
+<th style="text-align:right;">
+Unemployment
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mean
+</td>
+<td style="text-align:right;">
+9.02
+</td>
+<td style="text-align:right;">
+11447.05
+</td>
+<td style="text-align:right;">
+23.02
+</td>
+<td style="text-align:right;">
+30.77
+</td>
+<td style="text-align:right;">
+5.89
+</td>
+<td style="text-align:right;">
+96.57
+</td>
+<td style="text-align:right;">
+60.35
+</td>
+<td style="text-align:right;">
+9.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max.
+</td>
+<td style="text-align:right;">
+22.96
+</td>
+<td style="text-align:right;">
+18845.00
+</td>
+<td style="text-align:right;">
+40.35
+</td>
+<td style="text-align:right;">
+49.64
+</td>
+<td style="text-align:right;">
+13.80
+</td>
+<td style="text-align:right;">
+128.14
+</td>
+<td style="text-align:right;">
+99.71
+</td>
+<td style="text-align:right;">
+23.84
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Min.
+</td>
+<td style="text-align:right;">
+2.09
+</td>
+<td style="text-align:right;">
+3226.00
+</td>
+<td style="text-align:right;">
+14.25
+</td>
+<td style="text-align:right;">
+19.92
+</td>
+<td style="text-align:right;">
+1.62
+</td>
+<td style="text-align:right;">
+77.23
+</td>
+<td style="text-align:right;">
+27.09
+</td>
+<td style="text-align:right;">
+3.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SD
+</td>
+<td style="text-align:right;">
+5.15
+</td>
+<td style="text-align:right;">
+4891.52
+</td>
+<td style="text-align:right;">
+7.58
+</td>
+<td style="text-align:right;">
+7.63
+</td>
+<td style="text-align:right;">
+3.92
+</td>
+<td style="text-align:right;">
+15.28
+</td>
+<td style="text-align:right;">
+20.35
+</td>
+<td style="text-align:right;">
+4.96
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BRA
+</td>
+<td style="text-align:right;">
+4.65
+</td>
+<td style="text-align:right;">
+12521.00
+</td>
+<td style="text-align:right;">
+17.20
+</td>
+<td style="text-align:right;">
+24.17
+</td>
+<td style="text-align:right;">
+6.87
+</td>
+<td style="text-align:right;">
+92.86
+</td>
+<td style="text-align:right;">
+27.09
+</td>
+<td style="text-align:right;">
+10.55
+</td>
+</tr>
+</tbody>
+
+</table>
+<p><span style="font-size: smaller; color: gray;">Table 2. Notes: The first four rows show the results of the 2005 summary statistics for the entirety of the country sample. The fifth row shows the 2005 value of each variable for Brazil</span></p>
+</div>
+</div>
 </section>
 <section id="the-setup-of-the-scm" class="level3">
 <h3 class="anchored" data-anchor-id="the-setup-of-the-scm">The setup of the SCM</h3>
@@ -5241,49 +5430,52 @@ IND
 <p>We have a sample of <span class="math inline">\(J + 1\)</span> countries where <span class="math inline">\(j = 1\)</span> is our country of interest (Brazil) and <span class="math inline">\(j = 2,..., J + 1\)</span> are our potential comparison units (the 19 other countries in our sample).</p>
 <p>All our units are observed at the same time periods <span class="math inline">\(t = 1,..., T\)</span>. There is a positive number of preintervention periods (<span class="math inline">\(T_0\)</span>) and postintervention periods (<span class="math inline">\(T_1\)</span>) such that <span class="math inline">\(T = T_0 + T_1\)</span>.</p>
 <p><span class="math inline">\(j = 1\)</span> is exposed to the intervention on periods <span class="math inline">\(T_0 + 1,..., T\)</span> and the intervention has no effect on <span class="math inline">\(j = 1\)</span> during periods <span class="math inline">\(1,..., T_0\)</span>.</p>
-<p>Our synthetic control will be composed of two key parameters: the weights assigned to the units of comparison (denoted as <span class="math inline">\(w\)</span>) and the weights assigned to the covariates (also called the predictors of our variable of interest in SCM literature and denoted as <span class="math inline">\(v\)</span>). The goal is to construct a synthetic control that resembles, as best as possible, the trend of the variable of interest (e.g. GDP per capita) of our unit of interest during the preintervention period.</p>
+<p>Our synthetic control will be composed of two key parameters: the weights assigned to the units of comparison (denoted as <span class="math inline">\(w\)</span>) and the weights assigned to the covariates (also called the predictors of our variable of interest in SCM literature and denoted as <span class="math inline">\(v\)</span>). The goal is to construct a synthetic control that resembles, as best as possible, the trend of the variable of interest (GDP per capita) of our unit of interest during the pre-intervention period.</p>
 <p>The weights assigned to the comparison units are described by a <span class="math inline">\((J \times 1)\)</span> vector of weights <span class="math inline">\(W\)</span>, where:</p>
-<p><span class="math inline">\(W\ =\ (w_2,..., w_{J+1})&#39;\)</span> (<span class="math inline">\(&#39;\)</span> denotes the transpose of the vector)</p>
+<p><span class="math inline">\(W\ =\ (w_2,..., w_{J+1})&#39;\)</span><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <p>Such that <span class="math inline">\(0 \le w_j \le 1\)</span> for <span class="math inline">\(j=2,..., J+1\)</span> and <span class="math inline">\(w_2\ +\ ...\ +\ w_{J+1}\ =\ 1\)</span></p>
-<p>The weights assigned to our covariates are specifically denoted as <span class="math inline">\(v_m\)</span>, where we have <span class="math inline">\(m\ =\ 1,..., k\)</span> covariates in the study and are also normalized to sum to 1.</p>
+<p>The weights assigned to our covariates are specifically denoted as <span class="math inline">\(v_m\)</span>, where we have <span class="math inline">\(m\ =\ 1,..., k\)</span> covariates in the study and are also normalized to sum to 1. Recall that the model has 8 covariates, so <span class="math inline">\(v_m=(v_1,..., v_k)^{&#39;}\)</span> for <span class="math inline">\(k=1,..., 8\)</span>. Additionally, each <span class="math inline">\(v_k\)</span> must be such that <span class="math inline">\(0 \leq v_k \leq 1\)</span> .</p>
 <p>Let <span class="math inline">\(X_1\)</span> be a <span class="math inline">\((k \times 1)\)</span> vector containing the values of <strong>preintervention</strong> variables of the <strong>unit of interest</strong> that we aim to match as closely as possible.</p>
 <p>And let <span class="math inline">\(X_0\)</span> be a <span class="math inline">\((k \times J)\)</span> matrix collecting the values of <strong>the same preintervention variables</strong> for the <strong>comparison units</strong>.</p>
 <p>Therefore, the difference between preintervention characteristics of the unit of interest and the synthetic control is given by the vector <span class="math inline">\(X_1\ -\ X_0W\)</span>. We select the synthetic control <span class="math inline">\(W^*\)</span> that minimizes the size of this difference.</p>
-<p>The last parameter we must define addresses our variable of interest (think, again, of GDP per capita). We let <span class="math inline">\(Y_{jt}\)</span> be the variable of interest of unit <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>.</p>
+<p>The last parameter we must define addresses our variable of interest (GDP per capita). We let <span class="math inline">\(Y_{jt}\)</span> be the variable of interest of unit <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>. Note that <span class="math inline">\(Y_{jt}(v_m, x_{jt})\)</span> is a function of <span class="math inline">\(v_m\)</span>, the vector of covariate weights, and <span class="math inline">\(x_{jt}\)</span>, the vector of observed covariates of country <span class="math inline">\(j\)</span> at period <span class="math inline">\(t\)</span>.</p>
 <p>We are now ready to derive our synthetic control.</p>
 </section>
 <section id="deriving-the-synthetic-control" class="level3">
 <h3 class="anchored" data-anchor-id="deriving-the-synthetic-control">Deriving the synthetic control</h3>
-<p>In order to avoid the dangers of overfitting while still minimizing out-of-sample prediction errors, the first step in the derivation is to emply a cross-validation technique to choose the weights <span class="math inline">\(v_m\)</span>.</p>
-<p>We divide the pretreatment period into a training period (I will use 1990-2001) and a validation period (I will use 2002-2006). Using the covariates measured in the training period, we select the weights <span class="math inline">\(v_m\)</span> such that the result minimizes the root mean square prediction error of the validation period:</p>
-<p><span class="math display">\[
+<p>First, I apply a cross-validation technique to select the appropriate weights of the predictive covariates (<span class="math inline">\(v_{m}\)</span>). This technique minimizes out-of-sample prediction errors. I divide the pre-intervention period into a training period from 1990 to 2001 and a validation period from 2002 to 2005. I then select the covariate weights such that the resulting model minimizes the root mean square prediction error (RMSPE) over the validation period. The RMSPE measures the lack of fit between the path of the variable of interest for a particular country (in this case, Brazil) and its synthetic counterpart (the estimated counterfactual)<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>.</p>
+<p>The minimization of the RMSPE is as follows:</p>
+<p><span id="eq-xyp"><span class="math display">\[
 \min(RMSPE)=\min((\frac{1}{T_0}\sum^{T_0}_{t=1}(Y_{1t}-\sum_{j=2}^{J+1}w^{*}_{j}Y_{jt})^{2})^{\frac{1}{2}})
-\]</span></p>
-<p>Now, we apply the the <span class="math inline">\(v_m\)</span> weights derived above and choose <span class="math inline">\(W^*\)</span> as the value that solves:</p>
-<p><span class="math display">\[
+\tag{1}\]</span></span></p>
+<p>Where, for this equation, <span class="math inline">\(T_0\)</span> is the validation period and <span class="math inline">\(Y_{1t}\)</span> is the observed level of GDP per capita in Brazil (defined as <span class="math inline">\(j=1\)</span>) in period <span class="math inline">\(t\)</span>.</p>
+<p>I now use the set of covariate weights <span class="math inline">\(v_m\)</span> selected in the previous step and apply it to the predictor data for our comparison units. The resulting model uses the calibrated covariate weights and selects the vector of weights <span class="math inline">\(W^*=(w_2,..., w_{J+1})^{&#39;}\)</span> that minimizes the difference between the pre-intervention characteristics of the country of interest and the synthetic control:</p>
+<p><span id="eq-xyp"><span class="math display">\[
 \min(\sum^{k}_{m=1}v_m(X_{1m}-X_{0m}W)^2)
-\]</span></p>
-<p>This results in a synthetic control that approximates as best as mathematically possible the preintervention trend of GDP per capita in Brazil. If the resulting synthetic control has a preintervention GDP per capita trend that is similar to Brazil’s, we will have succeed in our goal of building a reliable counterfactual to the Brazilian economy. Thus, since our counterfactual is a relibale synthetic version of the Brazilian economy during the preintervention period, but is not exposed to the intervention of interest during the postintervention period, we are able to estimate the effect of the intervention of interest on GDP per capita in Brazil as the difference in GDP per capita levels between Brazil and its synthetic counterpart in the years following the intervention.</p>
-<p>In mathematical terms and following the definition of <span class="math inline">\(Y_{jt}\)</span> above, the synthetic control estimator of the effect of the treatment in any post intervention period <span class="math inline">\(t=T_0+1,...T\)</span> is given by the comparison between the variable of interest for the unit of interest and the variable of interest for the synthetic control at that period:</p>
-<p><span class="math display">\[
+\tag{2}\]</span></span></p>
+<p>Choosing a particular value for <span class="math inline">\(W\)</span> is equivalent to choosing a synthetic control. This results in a synthetic control that approximates as best as mathematically possible the preintervention trend of GDP per capita in Brazil. If the resulting synthetic control has a preintervention GDP per capita trend that is similar to Brazil’s, we will have succeed in our goal of building a reliable counterfactual to the Brazilian economy. Thus, since our counterfactual is a relibale synthetic version of the Brazilian economy during the preintervention period, but is not exposed to the intervention of interest during the postintervention period, we are able to estimate the effect of the intervention of interest on GDP per capita in Brazil as the difference in GDP per capita levels between Brazil and its synthetic counterpart in the years following the intervention.</p>
+<p>In mathematical terms and following the definition of <span class="math inline">\(Y_{jt}\)</span> above, the synthetic control estimator of the effect of the treatment in any post intervention period is given by the comparison between the variable of interest for the unit of interest and the variable of interest for the synthetic control at that period. Recalling that <span class="math inline">\(T_1\)</span> is the post-intervention period, let <span class="math inline">\(Y_1\)</span> be a <span class="math inline">\((T_1\times1)\)</span> vector collecting the post-intervention values for GDP per capita for the treated unit (Brazil). Let <span class="math inline">\(Y_0\)</span> be a <span class="math inline">\((T_1\times J)\)</span> matrix, where column <span class="math inline">\(J\)</span> contains the post-intervention predicted values of GDP per capita for unit <span class="math inline">\(J+1\)</span>. Then, the effect of the New Economic Matrix on GDP per capita in Brazil is estimated as the difference in GDP per capita levels between Brazil and its synthetic counterfactual in the years following the change in Finance Ministry, which marked the beginning of the implementation of NEM policies. Thus, now letting <span class="math inline">\(T_0\)</span> be the pre-intervention period, for any <span class="math inline">\(t\geq T_0+1\)</span>, this effect is given by:</p>
+<p><span id="eq-xyp"><span class="math display">\[
 Y_{1t}-\sum^{J+1}_{j=2}w^{*}_{j}Y_{jt}
-\]</span></p>
-<p>The derivation above does not mention many of the technical details that corroborate for the validity of the SCM in constructing a reliable counterfactual to our country of interest. I am more than happy to dive deeper into these details in our subsequent submissions if you judge that to be necessary.</p>
+\tag{3}\]</span></span></p>
+<p>For proofs and technical details that corroborate the validity of the SCM in constructing a reliable counterfactual to our country of interest, refer to <span class="citation" data-cites="abadie2021using">Abadie (<a href="#ref-abadie2021using" role="doc-biblioref">2021</a>)</span>; <span class="citation" data-cites="abadie2010synthetic">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2010synthetic" role="doc-biblioref">2010</a>)</span>; <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span>; <span class="citation" data-cites="abadie2022synthetic">Abadie and Vives-i-Bastida (<a href="#ref-abadie2022synthetic" role="doc-biblioref">2022</a>)</span>; <span class="citation" data-cites="botosaru2019role">Botosaru and Ferman (<a href="#ref-botosaru2019role" role="doc-biblioref">2019</a>)</span>; and <span class="citation" data-cites="ferman2020cherry">Ferman, Pinto, and Possebom (<a href="#ref-ferman2020cherry" role="doc-biblioref">2020</a>)</span>.</p>
 </section>
 <section id="a-word-on-the-choice-of-covariates-and-comparison-units" class="level3">
 <h3 class="anchored" data-anchor-id="a-word-on-the-choice-of-covariates-and-comparison-units">A word on the choice of covariates and comparison units</h3>
-<p>The model for synthetic controls mathematically assigns weights to the comparison units and to the covariates of choice to provide the best possible approximation of the trend in the country of interest’s variable of interest during the pre-intervention period. In this study, the variable of interest is PPP GDP per capita measured in constant 2017 international $. <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span> state that it is of crucial importance that synthetic controls closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
+<p>The model for synthetic controls mathematically assigns weights to the comparison units and to the covariates of choice to provide the best possible approximation of the trend in the country of interest’s variable of interest during the pre-intervention period. In this study, the variable of interest is PPP GDP per capita measured in constant 2017 international $. <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span> state that it is of crucial importance that synthetic controls closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>.</p>
 <p>My choice of covariates (listed in part 3) follows what <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span> and <span class="citation" data-cites="carrasco2014decada">Carrasco, Mello, and Duarte (<a href="#ref-carrasco2014decada" role="doc-biblioref">2014</a>)</span> have defined as variables that are part of a standard set of economic growth predictors. However, in contrast to <span class="citation" data-cites="carrasco2014decada">Carrasco, Mello, and Duarte (<a href="#ref-carrasco2014decada" role="doc-biblioref">2014</a>)</span>, I opt to follow mainstream SCM literature and only include quantitative variables in my list of covariates.</p>
+<p>Literature on the SCM highlights that the choice of our comparison units requires care. Here, the country/unit of interest is Brazil. Recall that the synthetic control derived from the comparison units is meant to approximate the counterfactual of the country of interest that is free of the impacts of the intervention. Therefore, it is important to restrict the country pool of comparison units to countries with outcomes that are thought to be driven by similar processes as for the country of interest and that were not subject to large idiosyncratic shocks that did not affect the country of interest <span class="citation" data-cites="abadie2015comparative">(<a href="#ref-abadie2015comparative" role="doc-biblioref">Abadie, Diamond, and Hainmueller 2015</a>)</span>.</p>
+<p>Considering the above, my starting point for the selection of the comparison units is the IMF’s classification of Emerging and Developing Economies in the World Economic Outlook Database<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>. From this starting point, countries in this list were selected for the final country pool if they met one of three conditions: (1) geographic proximity and ties with the Brazilian economy, (2) sizeable population and considerable impact on the global economy, and (3) similar GDP per capita growth trends as Brazil’s in the pre-intervention period. As mentioned above, the final pool of comparison units is Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Turkey, Ukraine, and Uruguay<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>.</p>
 </section>
 <section id="main-assumption-and-threats-to-inference" class="level3">
 <h3 class="anchored" data-anchor-id="main-assumption-and-threats-to-inference">Main assumption and threats to inference</h3>
-<p>Having defined the period of analysis, the comparison units, and the covariates, the main assumption of the model is as follows:</p>
-<p>Only units that are alike in both observed and unobserved determinants of the variable of interest, as well as in the effect of those determinants upon such variable, should produce similar trajectories of the variable of interest over extended periods of time. Once it has been established that the country of interest and the synthetic control unit have similar behavior over extended periods prior to the intervention, a discrepancy in the variable of interest in the post-intervention period is interpreted as produced by the intervention itself<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>.</p>
-<p>Based on the above and the intense active discussions in academia regarding the inferential validity of synthetic controls<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>, I must discuss three important considerations:</p>
+<p>Having defined the period of analysis, the comparison units, the covariates, and the mathematical derivation, the main assumption of the model is as follows:</p>
+<p>Only units that are alike in both observed and unobserved determinants of the variable of interest, as well as in the effect of those determinants upon such variable, should produce similar trajectories of the variable of interest over extended periods of time. Once it has been established that the country of interest and the synthetic control unit have similar behavior over extended periods prior to the intervention, a discrepancy in the variable of interest in the post-intervention period is interpreted as produced by the intervention itself<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>.</p>
+<p>Based on the above and the intense active discussions in academia regarding the inferential validity of synthetic controls<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>, I must discuss three important considerations:</p>
 <ol type="1">
 <li><p>On the upside, mathematical proofs show that synthetic controls with a very close fit between the counterfactual and the unit of interest control for the impacts of unobserved confounders. In other words, confounders that affect both Brazil and its counterfactual are taken into account in the derivation of the model. Note, however, that if another event/intervention that had its start in 2006 is what is actually impacting the GDP per capita trend in Brazil we would be unable to differentiate its impact from the impact of the NEM. One variable that fits this timeline and might have had a negative impact in the Brazilian economy is the perception of the level of corruption in the country. Starting in 2005, several corruption schemes were discovered, which might have affected domestic investment, foreign direct investment, and confidence towards governmental institutions.</p></li>
 <li><p>If the synthetic control does not closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention and/or does not produce a similar trajectory of the variable of interest in comparison to Brazil over extended periods of time the resulting counterfactual fails to respect the main assumptions and, therefore, cannot be used as evidence for a causal relationship. This is the case in <span class="citation" data-cites="carrasco2014decada">Carrasco, Mello, and Duarte (<a href="#ref-carrasco2014decada" role="doc-biblioref">2014</a>)</span> and <span class="citation" data-cites="balassiano2018recessao">Balassiano (<a href="#ref-balassiano2018recessao" role="doc-biblioref">2018</a>)</span>. In both papers, the authors do not present evidence showing how well the syntehtic control reproduces the pre-intervention values of covariates. Furthermore, both papers fail to derive a counterfactual with a similar pre-intervention trajectory of the variable of interest.</p></li>
-<li><p>Traditional exercises that test for levels of statistical inference and significance are not possible within the framework of SCM. There are, however, tests that measure the significance and robustsness of the results derived with synthetic controls. This leads our next sub-section.</p></li>
+<li><p>Traditional exercises that test for levels of statistical inference and significance are not possible within the framework of SCM. There are, however, tests that measure the significance and robustsness of the results derived with synthetic controls. This leads our next sub-section. **CHANGE THIS TO ENCOMPASS LEAD IN FOR EMPIRICAL EXTENSIONS OF INFERENCE TESTS (DEPENDENCE OF RESULTS ON ONE OR A FEW COUNTRIES IS A LIMITATION, THUS USE EMPIRICAL EXTENSION OF ROBUSTNESS TEST)</p></li>
 </ol>
 </section>
 <section id="inference-tests-and-empirical-extension" class="level3">
@@ -5292,11 +5484,11 @@ Y_{1t}-\sum^{J+1}_{j=2}w^{*}_{j}Y_{jt}
 <section id="placebo-study" class="level4">
 <h4 class="anchored" data-anchor-id="placebo-study">Placebo study</h4>
 <p>An in-space placebo study reassigns the treatment in the data to each one of the comparison units. This will allow me to obtain synthetic control estimates for countries that did not experience the event of interest, namely the New Economic Matrix. While some countries in our pool were exposed to similar versions of some of the policies related to the NEM, nowhere did the policy-making strategy embrace as many aspects of economic policy and represent such a clear break with previous trends as in Brazil.</p>
-<p>Applying the synthetic control estimation process to each of our comparison units in the country pool allows for the comparison of the estimated effect of the NEM in Brazil to the distribution of placebo effects obtained for other countries. This is done by comparing the ratios of post-intervention RMSPE and pre-intervention RMSPE for Brazil and for all the units in the country pool. Recall that the RMSPE measures the lack of fit between the path of the variable of interest (in this case, GDP per capita) for a particular country and its synthetic counterpart. I argue that Brazil was the only country that underwent the intervention characterized by the New Economic Matrix. Therefore, the effect of the NEM on the Brazilian economy will be considered significant if the resulting RMSPE ratio for Brazil is large compared to the distribution for the placebo effects<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
+<p>Applying the synthetic control estimation process to each of our comparison units in the country pool allows for the comparison of the estimated effect of the NEM in Brazil to the distribution of placebo effects obtained for other countries. This is done by comparing the ratios of post-intervention RMSPE and pre-intervention RMSPE for Brazil and for all the units in the country pool. Recall that the RMSPE measures the lack of fit between the path of the variable of interest (in this case, GDP per capita) for a particular country and its synthetic counterpart. I argue that Brazil was the only country that underwent the intervention characterized by the New Economic Matrix. Therefore, the effect of the NEM on the Brazilian economy will be considered significant if the resulting RMSPE ratio for Brazil is large compared to the distribution for the placebo effects<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>.</p>
 </section>
 <section id="robustness-test" class="level4">
 <h4 class="anchored" data-anchor-id="robustness-test">Robustness test</h4>
-<p>The objective of the robustness test is to check the sensitivity of my main results to changes in the country weights, <span class="math inline">\(W^*\)</span>. I will iteratively re-estimate the model to construct a counterfactual of Brazil, omitting in each iteration one of the countries that were assigned at least 10% weights in my main model. According to <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span>, by excluding countries that received a large positive weight, we sacrifice some of the goodness of the pre-intervention fit, but this sensitivity check allows for the evaluation of the extent to which results are driven by any particular control country<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. If the resulting trend of the impact of the NEM is similar for all the models that create a counterfactual without using one of high weight countries in the main model, this shows that the results are robust to the exclusion of any particular country that was assigned a high predictive weight in main counterfactual.</p>
+<p>The objective of the robustness test is to check the sensitivity of my main results to changes in the country weights, <span class="math inline">\(W^*\)</span>. I will iteratively re-estimate the model to construct a counterfactual of Brazil, omitting in each iteration one of the countries that were assigned at least 10% weights in my main model. According to <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span>, by excluding countries that received a large positive weight, we sacrifice some of the goodness of the pre-intervention fit, but this sensitivity check allows for the evaluation of the extent to which results are driven by any particular control country<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>. If the resulting trend of the impact of the NEM is similar for all the models that create a counterfactual without using one of high weight countries in the main model, this shows that the results are robust to the exclusion of any particular country that was assigned a high predictive weight in main counterfactual.</p>
 </section>
 <section id="empirical-extension" class="level4">
 <h4 class="anchored" data-anchor-id="empirical-extension">Empirical Extension</h4>
@@ -5397,11 +5589,15 @@ Werneck, Rogério LF. 2014. <span>“Altern<span>â</span>ncia Pol<span>ı́</sp
 <li id="fn5"><p>Not <strong>all</strong> of the remaining 50%, since the author leaves room for measurement errors there<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>For example, the Mexican Peso crisis. See https://www.federalreserve.gov/pubs/bulletin/1996/396lead.pdf<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>See the following for an expanded timeline of Figure 1: https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD?end=2022&amp;locations=BR-AR-CL-MX&amp;start=1990<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>See <span class="citation" data-cites="abadie2021using">Abadie (<a href="#ref-abadie2021using" role="doc-biblioref">2021</a>)</span>, <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span>, and <span class="citation" data-cites="botosaru2019role">Botosaru and Ferman (<a href="#ref-botosaru2019role" role="doc-biblioref">2019</a>)</span> for proofs of why a perfect reproduction is not required.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>See <span class="citation" data-cites="abadie2003economic">Abadie and Gardeazabal (<a href="#ref-abadie2003economic" role="doc-biblioref">2003</a>)</span>, <span class="citation" data-cites="abadie2010synthetic">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2010synthetic" role="doc-biblioref">2010</a>)</span>, <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="abadie2021using">Abadie (<a href="#ref-abadie2021using" role="doc-biblioref">2021</a>)</span>, <span class="citation" data-cites="abadie2022synthetic">Abadie and Vives-i-Bastida (<a href="#ref-abadie2022synthetic" role="doc-biblioref">2022</a>)</span>, and <span class="citation" data-cites="botosaru2019role">Botosaru and Ferman (<a href="#ref-botosaru2019role" role="doc-biblioref">2019</a>)</span> for proofs and in-depth explanations.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>See, for example, <span class="citation" data-cites="botosaru2019role">Botosaru and Ferman (<a href="#ref-botosaru2019role" role="doc-biblioref">2019</a>)</span> and <span class="citation" data-cites="ferman2020cherry">Ferman, Pinto, and Possebom (<a href="#ref-ferman2020cherry" role="doc-biblioref">2020</a>)</span>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>See <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span> for details on RMSPE ratio placebo study.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>Also see <span class="citation" data-cites="abadie2021using">Abadie (<a href="#ref-abadie2021using" role="doc-biblioref">2021</a>)</span> for details on the robustness test.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>’ denotes the transpose of the vector.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>See <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span> and <span class="citation" data-cites="abadie2022synthetic">Abadie and Vives-i-Bastida (<a href="#ref-abadie2022synthetic" role="doc-biblioref">2022</a>)</span> for details, proofs, and intuition regarding the RMSPE.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>See <span class="citation" data-cites="abadie2021using">Abadie (<a href="#ref-abadie2021using" role="doc-biblioref">2021</a>)</span>, <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span>, and <span class="citation" data-cites="botosaru2019role">Botosaru and Ferman (<a href="#ref-botosaru2019role" role="doc-biblioref">2019</a>)</span> for proofs of why a perfect reproduction is not required.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>As in <span class="citation" data-cites="carrasco2014decada">Carrasco, Mello, and Duarte (<a href="#ref-carrasco2014decada" role="doc-biblioref">2014</a>)</span>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Argentina and Venezuela fitted the geographic parameter but were excluded due to large idiosyncratic shocks during the study period. Indonesia, the Philippines, and Thailand have considerable populations but were excluded due to large shocks in the 1990s. Finally, Russia also has a considerable population size but was excluded due to idiosyncratic shocks and high levels of volatility in the variable of interest.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>See <span class="citation" data-cites="abadie2003economic">Abadie and Gardeazabal (<a href="#ref-abadie2003economic" role="doc-biblioref">2003</a>)</span>, <span class="citation" data-cites="abadie2010synthetic">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2010synthetic" role="doc-biblioref">2010</a>)</span>, <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="abadie2021using">Abadie (<a href="#ref-abadie2021using" role="doc-biblioref">2021</a>)</span>, <span class="citation" data-cites="abadie2022synthetic">Abadie and Vives-i-Bastida (<a href="#ref-abadie2022synthetic" role="doc-biblioref">2022</a>)</span>, and <span class="citation" data-cites="botosaru2019role">Botosaru and Ferman (<a href="#ref-botosaru2019role" role="doc-biblioref">2019</a>)</span> for proofs and in-depth explanations.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>See, for example, <span class="citation" data-cites="botosaru2019role">Botosaru and Ferman (<a href="#ref-botosaru2019role" role="doc-biblioref">2019</a>)</span> and <span class="citation" data-cites="ferman2020cherry">Ferman, Pinto, and Possebom (<a href="#ref-ferman2020cherry" role="doc-biblioref">2020</a>)</span>.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>See <span class="citation" data-cites="abadie2015comparative">Abadie, Diamond, and Hainmueller (<a href="#ref-abadie2015comparative" role="doc-biblioref">2015</a>)</span> for details on RMSPE ratio placebo study.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>Also see <span class="citation" data-cites="abadie2021using">Abadie (<a href="#ref-abadie2021using" role="doc-biblioref">2021</a>)</span> for details on the robustness test.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

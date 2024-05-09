@@ -84,7 +84,7 @@ The unit of analysis will be a country-year panel. I collected data from the Wor
 
 **Country of interest:** Brazil.
 
-**Country pool/comparison units** (that will be fed into the model to create the synthetic control): Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Türkiye, Ukraine, Uruguay.
+**Country pool/comparison units** (that will be fed into the model to create the synthetic control): Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Türkiye, Ukraine, and Uruguay.
 
 **Variable of interest:** GDP per capita, PPP (constant 2017 international $).
 
@@ -488,10 +488,10 @@ plot.0316.base
 
 When taking both figures and the historic trend of Brazilian GDP per capita^[See the following for an expanded timeline of Figure 1: https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD?end=2022&locations=BR-AR-CL-MX&start=1990] into consideration, one is led to conlude that the take-off affirmation is, at best, relative. Compared to the Brazilian trends of the 1980s and 1990s, the 2003-2013 period can indeed characterize as a take-off. The growth trajectory in this period is much steadier and positive than in previous decades. Compared to its Latin American peers, however, the best definition would perhaps be an attempt to catch-up. Figure 2 shows that, even though the growth trend is more promising than that of the late twentieth century, Brazil still has the slowest growth trajectory when compared to Argentina, Chile, and the Latin American average.
 
-The table below summarizes 2000-2005 country-average and the country-growth rate average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil. 
+The table below summarizes the 2000-2005 country average and the country growth rate average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil.
 
 
-```{r table 1, echo=FALSE, results='markup', fig.cap="Table 1. Notes: GDP per capita is averaged for the 2000-2005 period and in PPP 2017 international $. The growth rate average is the average of the yearly GDP per capita growth rates during the 2000-2005 period."}
+```{r table 1, echo=FALSE, results='markup', fig.cap="<span style='font-size: smaller; color: gray;'>Table 1. Notes: GDP per capita is averaged for the 2000-2005 period and in PPP 2017 international $. The growth rate average is the average of the yearly GDP per capita growth rates during the 2000-2005 period."}
 #10. Here I will subset the main dataset to construct Table 1 using the kableExtra package
 
 #10.1 Subsetting countries I will use for this table and the final analysis of my analysis 
@@ -576,21 +576,137 @@ t1_totable <- t1_totable %>%
 #10.6 Creating table 
 t1 <- t1_totable %>%
   select(country, gdpc, avg.grate) %>%
-  kbl(caption="GDP per Capita Averages and Growth Averages for Selected Countries",
+  kbl(caption="GDP per Capita Averages and Growth Averages",
       format= "html", #we can change this to "latex" and delete "Table 1" to title (latex automatically includes table count)      
       col.names = c("Country","GDP per Capita", "Growth Rate Avg."),
       align = c("l", "r", "r"), #if align = NULL, numeric columns are right-aligned, and other columns are left-aligned
       longtable = T,
       tabular = "longtable",
       digits = 3,
-      booktabs = T) %>%
+      booktabs = T) %>% 
   kable_classic(full_width = F, html_font = "helvetica")
 t1
 ```
 
 The table and the two figures above indicate that comparative measures across different countries or even regional averages are not optimal. Our goal should not be to compare Brazil to any one other country, since it is clear that none of the lines above follow Brazil's trend during our pre-intervention period. Therefore, we cannot draw an informative conclusion on why Brazil has under performed or even if it has under performed at all. Maybe this trend was the best that the Brazilian economy could do in this period. In order to perform a more sound analysis, we must get as close as possible to constructing a precise counterfactual to the Brazilian economy where the only difference is that such counterfactual was not exposed to the NEM. This is where the synthetic control method comes in, the topic of the remaining sections of the Research Design chapter.
 
-Finally, CONTINUE FROM HERE: SUMMARIZING THE COVARIATE VALUES IN 2005 ACROSS OUR COUNTRY SAMPLE
+Finally, let's quickly visualize the summary statistics of the covariates for the sample in comparison to Brazil. The table below shows, for the last pre-intervention period, the mean, max, min, and standard deviation values for all countries in the sample (including Brazil), as well as the values of the same variables for Brazil in this same year.
+
+```{r table 2, echo=FALSE, results='markup', fig.cap="<span style='font-size: smaller; color: gray;'>Table 2. Notes: The first four rows show the results of the 2005 summary statistics for the entirety of the country sample. The fifth row shows the 2005 value of each variable for Brazil"}
+#11.1 First, let's subset out main df to only show 2005 values and the columns we will use to create the table
+t2.editing <- data.v6 %>% 
+  filter(year == 2005) %>% 
+  select(country, agva, gdpc, gcf, indva, infrate, termstrade,tradeop, unemp)
+
+#11.2 Now let's create the summary statistics for each variable that will be in the df we will use to create the table
+#for agva
+agva.summ <- summary(t2.editing$agva)
+agva.sd <- sd(t2.editing$agva)
+
+#for gdpc
+gdpc.summ <- summary(t2.editing$gdpc)
+gdpc.sd <- sd(t2.editing$gdpc)
+
+#for gcf
+gcf.summ <- summary(t2.editing$gcf)
+gcf.sd <- sd(t2.editing$gcf)
+
+#for indva
+indva.summ <- summary(t2.editing$indva)
+indva.sd <- sd(t2.editing$indva)
+
+#for infrate
+infrate.summ <- summary(t2.editing$infrate)
+infrate.sd <- sd(t2.editing$infrate)
+
+#for termstrade
+termstrade.summ <- summary(t2.editing$termstrade)
+termstrade.sd <- sd(t2.editing$termstrade)
+
+#for tradeop
+tradeop.summ <- summary(t2.editing$tradeop)
+tradeop.sd <- sd(t2.editing$tradeop)
+
+#for unemp
+unemp.summ <- summary(t2.editing$unemp)
+unemp.sd <- sd(t2.editing$unemp)
+
+#11.3 now creating the table df
+t2_totable <- data.frame(summ = NA, 
+                         agva = NA, 
+                         gdpc = NA, 
+                         gcf = NA, 
+                         indva = NA, 
+                         infrate = NA, 
+                         termstrade = NA, 
+                         tradeop = NA, 
+                         unemp = NA)
+
+#populating table df
+t2_totable[1, ] <- c("Mean", 
+                     agva.summ[4], 
+                     gdpc.summ[4],
+                     gcf.summ[4],
+                     indva.summ[4],
+                     infrate.summ[4],
+                     termstrade.summ[4],
+                     tradeop.summ[4],
+                     unemp.summ[4])
+
+t2_totable[2, ] <- c("Max.", 
+                     agva.summ[6], 
+                     gdpc.summ[6],
+                     gcf.summ[6],
+                     indva.summ[6],
+                     infrate.summ[6],
+                     termstrade.summ[6],
+                     tradeop.summ[6],
+                     unemp.summ[6])
+
+t2_totable[3, ] <- c("Min.", 
+                     agva.summ[1], 
+                     gdpc.summ[1],
+                     gcf.summ[1],
+                     indva.summ[1],
+                     infrate.summ[1],
+                     termstrade.summ[1],
+                     tradeop.summ[1],
+                     unemp.summ[1])
+
+t2_totable[4, ] <- c("SD", 
+                     agva.sd, 
+                     gdpc.sd,
+                     gcf.sd,
+                     indva.sd,
+                     infrate.sd,
+                     termstrade.sd,
+                     tradeop.sd,
+                     unemp.sd)
+
+t2_totable[5, ] <- t2.editing[3,]
+
+t2_totable$agva <- as.numeric(t2_totable$agva)
+t2_totable$gdpc <- as.numeric(t2_totable$gdpc)
+t2_totable$gcf <- as.numeric(t2_totable$gcf)
+t2_totable$indva <- as.numeric(t2_totable$indva)
+t2_totable$infrate <- as.numeric(t2_totable$infrate)
+t2_totable$termstrade <- as.numeric(t2_totable$termstrade)
+t2_totable$tradeop <- as.numeric(t2_totable$tradeop)
+t2_totable$unemp <- as.numeric(t2_totable$unemp)
+
+#11.4 now let's create the table
+t2 <- t2_totable %>%
+  kbl(caption="Summary Statistics for 2005",
+      format= "html", #we can change this to "latex" and delete "Table 1" to title (latex automatically includes table count)      
+      col.names = c("","Agriculture v.a.", "GDP/capita", "GCF", "Industry v.a.", "Inflation", "Terms of Trade", "Trade Op.", "Unemployment"),
+      align = c("l", "r", "r", "r", "r", "r", "r", "r", "r"), #if align = NULL, numeric columns are right-aligned, and other columns are left-aligned
+      longtable = T,
+      tabular = "longtable",
+      digits = 2,
+      booktabs = T) %>% 
+  kable_classic(full_width = F, html_font = "helvetica")
+t2
+```
 
 ### The setup of the SCM
 
@@ -606,15 +722,15 @@ All our units are observed at the same time periods $t = 1,..., T$. There is a p
 
 $j = 1$ is exposed to the intervention on periods $T_0 + 1,..., T$ and the intervention has no effect on $j = 1$ during periods $1,..., T_0$.
 
-Our synthetic control will be composed of two key parameters: the weights assigned to the units of comparison (denoted as $w$) and the weights assigned to the covariates (also called the predictors of our variable of interest in SCM literature and denoted as $v$). The goal is to construct a synthetic control that resembles, as best as possible, the trend of the variable of interest (e.g. GDP per capita) of our unit of interest during the preintervention period.
+Our synthetic control will be composed of two key parameters: the weights assigned to the units of comparison (denoted as $w$) and the weights assigned to the covariates (also called the predictors of our variable of interest in SCM literature and denoted as $v$). The goal is to construct a synthetic control that resembles, as best as possible, the trend of the variable of interest (GDP per capita) of our unit of interest during the pre-intervention period.
 
 The weights assigned to the comparison units are described by a $(J \times 1)$ vector of weights $W$, where:
 
-$W\ =\ (w_2,..., w_{J+1})'$ ($'$ denotes the transpose of the vector)
+$W\ =\ (w_2,..., w_{J+1})'$^[' denotes the transpose of the vector.]
 
 Such that $0 \le w_j \le 1$ for $j=2,..., J+1$ and $w_2\ +\ ...\ +\ w_{J+1}\ =\ 1$
 
-The weights assigned to our covariates are specifically denoted as $v_m$, where we have $m\ =\ 1,..., k$ covariates in the study and are also normalized to sum to 1.
+The weights assigned to our covariates are specifically denoted as $v_m$, where we have $m\ =\ 1,..., k$ covariates in the study and are also normalized to sum to 1. Recall that the model has 8 covariates, so $v_m=(v_1,..., v_k)^{'}$ for $k=1,..., 8$. Additionally, each $v_k$ must be such that $0 \leq v_k \leq 1$ .
 
 Let $X_1$ be a $(k \times 1)$ vector containing the values of **preintervention** variables of the **unit of interest** that we aim to match as closely as possible.
 
@@ -622,35 +738,37 @@ And let $X_0$ be a $(k \times J)$ matrix collecting the values of **the same pre
 
 Therefore, the difference between preintervention characteristics of the unit of interest and the synthetic control is given by the vector $X_1\ -\ X_0W$. We select the synthetic control $W^*$ that minimizes the size of this difference.
 
-The last parameter we must define addresses our variable of interest (think, again, of GDP per capita). We let $Y_{jt}$ be the variable of interest of unit $j$ at time $t$.
+The last parameter we must define addresses our variable of interest (GDP per capita). We let $Y_{jt}$ be the variable of interest of unit $j$ at time $t$. Note that $Y_{jt}(v_m, x_{jt})$ is a function of $v_m$, the vector of covariate weights, and $x_{jt}$, the vector of observed covariates of country $j$ at period $t$.
 
 We are now ready to derive our synthetic control.
 
 ### Deriving the synthetic control
 
-In order to avoid the dangers of overfitting while still minimizing out-of-sample prediction errors, the first step in the derivation is to emply a cross-validation technique to choose the weights $v_m$.
+First, I apply a cross-validation technique to select the appropriate weights of the predictive covariates ($v_{m}$). This technique minimizes out-of-sample prediction errors. I divide the pre-intervention period into a training period from 1990 to 2001 and a validation period from 2002 to 2005. I then select the covariate weights such that the resulting model minimizes the root mean square prediction error (RMSPE) over the validation period. The RMSPE measures the lack of fit between the path of the variable of interest for a particular country (in this case, Brazil) and its synthetic counterpart (the estimated counterfactual)^[See @abadie2015comparative and @abadie2022synthetic for details, proofs, and intuition regarding the RMSPE.].
 
-We divide the pretreatment period into a training period (I will use 1990-2001) and a validation period (I will use 2002-2006). Using the covariates measured in the training period, we select the weights $v_m$ such that the result minimizes the root mean square prediction error of the validation period:
+The minimization of the RMSPE is as follows:
 
-$$
+$$ 
 \min(RMSPE)=\min((\frac{1}{T_0}\sum^{T_0}_{t=1}(Y_{1t}-\sum_{j=2}^{J+1}w^{*}_{j}Y_{jt})^{2})^{\frac{1}{2}})
-$$
+$$ {#eq-xyp}
 
-Now, we apply the the $v_m$ weights derived above and choose $W^*$ as the value that solves:
+Where, for this equation, $T_0$ is the validation period and $Y_{1t}$ is the observed level of GDP per capita in Brazil (defined as $j=1$) in period $t$.
+
+I now use the set of covariate weights $v_m$ selected in the previous step and apply it to the predictor data for our comparison units. The resulting model uses the calibrated covariate weights and selects the vector of weights $W^*=(w_2,..., w_{J+1})^{'}$ that minimizes the difference between the pre-intervention characteristics of the country of interest and the synthetic control: 
 
 $$
 \min(\sum^{k}_{m=1}v_m(X_{1m}-X_{0m}W)^2)
-$$
+$$ {#eq-xyp}
 
-This results in a synthetic control that approximates as best as mathematically possible the preintervention trend of GDP per capita in Brazil. If the resulting synthetic control has a preintervention GDP per capita trend that is similar to Brazil's, we will have succeed in our goal of building a reliable counterfactual to the Brazilian economy. Thus, since our counterfactual is a relibale synthetic version of the Brazilian economy during the preintervention period, but is not exposed to the intervention of interest during the postintervention period, we are able to estimate the effect of the intervention of interest on GDP per capita in Brazil as the difference in GDP per capita levels between Brazil and its synthetic counterpart in the years following the intervention.
+Choosing a particular value for $W$ is equivalent to choosing a synthetic control. This results in a synthetic control that approximates as best as mathematically possible the preintervention trend of GDP per capita in Brazil. If the resulting synthetic control has a preintervention GDP per capita trend that is similar to Brazil's, we will have succeed in our goal of building a reliable counterfactual to the Brazilian economy. Thus, since our counterfactual is a relibale synthetic version of the Brazilian economy during the preintervention period, but is not exposed to the intervention of interest during the postintervention period, we are able to estimate the effect of the intervention of interest on GDP per capita in Brazil as the difference in GDP per capita levels between Brazil and its synthetic counterpart in the years following the intervention.
 
-In mathematical terms and following the definition of $Y_{jt}$ above, the synthetic control estimator of the effect of the treatment in any post intervention period $t=T_0+1,...T$ is given by the comparison between the variable of interest for the unit of interest and the variable of interest for the synthetic control at that period:
+In mathematical terms and following the definition of $Y_{jt}$ above, the synthetic control estimator of the effect of the treatment in any post intervention period is given by the comparison between the variable of interest for the unit of interest and the variable of interest for the synthetic control at that period. Recalling that $T_1$ is the post-intervention period, let $Y_1$ be a $(T_1\times1)$ vector collecting the post-intervention values for GDP per capita for the treated unit (Brazil). Let $Y_0$ be a $(T_1\times J)$ matrix, where column $J$ contains the post-intervention predicted values of GDP per capita for unit $J+1$. Then, the effect of the New Economic Matrix on GDP per capita in Brazil is estimated as the difference in GDP per capita levels between Brazil and its synthetic counterfactual in the years following the change in Finance Ministry, which marked the beginning of the implementation of NEM policies. Thus, now letting $T_0$ be the pre-intervention period, for any $t\geq T_0+1$, this effect is given by:
 
 $$
 Y_{1t}-\sum^{J+1}_{j=2}w^{*}_{j}Y_{jt}
-$$
+$$ {#eq-xyp}
 
-The derivation above does not mention many of the technical details that corroborate for the validity of the SCM in constructing a reliable counterfactual to our country of interest. I am more than happy to dive deeper into these details in our subsequent submissions if you judge that to be necessary.
+For proofs and technical details that corroborate the validity of the SCM in constructing a reliable counterfactual to our country of interest, refer to @abadie2021using; @abadie2010synthetic; @abadie2015comparative; @abadie2022synthetic; @botosaru2019role; and @ferman2020cherry.
 
 ### A word on the choice of covariates and comparison units
 
@@ -658,9 +776,13 @@ The model for synthetic controls mathematically assigns weights to the compariso
 
 My choice of covariates (listed in part 3) follows what @abadie2015comparative and @carrasco2014decada have defined as variables that are part of a standard set of economic growth predictors. However, in contrast to @carrasco2014decada, I opt to follow mainstream SCM literature and only include quantitative variables in my list of covariates.
 
+Literature on the SCM highlights that the choice of our comparison units requires care. Here, the country/unit of interest is Brazil. Recall that the synthetic control derived from the comparison units is meant to approximate the counterfactual of the country of interest that is free of the impacts of the intervention. Therefore, it is important to restrict the country pool of comparison units to countries with outcomes that are thought to be driven by similar processes as for the country of interest and that were not subject to large idiosyncratic shocks that did not affect the country of interest [@abadie2015comparative].
+
+Considering the above, my starting point for the selection of the comparison units is the IMF’s classification of Emerging and Developing Economies in the World Economic Outlook Database^[As in @carrasco2014decada.]. From this starting point, countries in this list were selected for the final country pool if they met one of three conditions: (1) geographic proximity and ties with the Brazilian economy, (2) sizeable population and considerable impact on the global economy, and (3) similar GDP per capita growth trends as Brazil’s in the pre-intervention period. As mentioned above, the final pool of comparison units is Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Turkey, Ukraine, and Uruguay^[Argentina and Venezuela fitted the geographic parameter but were excluded due to large idiosyncratic shocks during the study period. Indonesia, the Philippines, and Thailand have considerable populations but were excluded due to large shocks in the 1990s. Finally, Russia also has a considerable population size but was excluded due to idiosyncratic shocks and high levels of volatility in the variable of interest.].
+
 ### Main assumption and threats to inference
 
-Having defined the period of analysis, the comparison units, and the covariates, the main assumption of the model is as follows: 
+Having defined the period of analysis, the comparison units, the covariates, and the mathematical derivation, the main assumption of the model is as follows: 
 
 Only units that are alike in both observed and unobserved determinants of the variable of interest, as well as in the effect of those determinants upon such variable, should produce similar trajectories of the variable of interest over extended periods of time. Once it has been established that the country of interest and the synthetic control unit have similar behavior over extended periods prior to the intervention, a discrepancy in the variable of interest in the post-intervention period is interpreted as produced by the intervention itself^[See @abadie2003economic, @abadie2010synthetic, @abadie2015comparative, @abadie2021using, @abadie2022synthetic, and @botosaru2019role for proofs and in-depth explanations.].
 
@@ -670,7 +792,7 @@ Based on the above and the intense active discussions in academia regarding the 
 
 (2) If the synthetic control does not closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention and/or does not produce a similar trajectory of the variable of interest in comparison to Brazil over extended periods of time the resulting counterfactual fails to respect the main assumptions and, therefore, cannot be used as evidence for a causal relationship. This is the case in @carrasco2014decada and @balassiano2018recessao. In both papers, the authors do not present evidence showing how well the syntehtic control reproduces the pre-intervention values of covariates. Furthermore, both papers fail to derive a counterfactual with a similar pre-intervention trajectory of the variable of interest.
 
-(3) Traditional exercises that test for levels of statistical inference and significance are not possible within the framework of SCM. There are, however, tests that measure the significance and robustsness of the results derived with synthetic controls. This leads our next sub-section.
+(3) Traditional exercises that test for levels of statistical inference and significance are not possible within the framework of SCM. There are, however, tests that measure the significance and robustsness of the results derived with synthetic controls. This leads our next sub-section. **CHANGE THIS TO ENCOMPASS LEAD IN FOR EMPIRICAL EXTENSIONS OF INFERENCE TESTS (DEPENDENCE OF RESULTS ON ONE OR A FEW COUNTRIES IS A LIMITATION, THUS USE EMPIRICAL EXTENSION OF ROBUSTNESS TEST)
 
 ### Inference tests and empirical extension
 
