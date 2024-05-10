@@ -50,7 +50,7 @@ With that in mind, my main research question is:
 
 This question builds upon a wide range of existing research on the topic. My goal is to add to the discussion from two papers that have used the same empirical method I will imply, albeit with relevant differences in the research question and methodological setting than mine. @carrasco2014decada apply the synthetic control method (SCM) to quantify the impact of the Workers Party tenure on economic development in Brazil. They apply the start of President Lula's first presidential administration as the event of interest and set 2003 as the intervention year. The authors argue that the Party had a negative impact of about 12% in Brazil's GDP per capita as of 2012. @balassiano2018recessao attempts to quantify the impact that domestic factors had on the severity of the Brazilian recession of 2014-2016. The author found evidence that the substantial deterioration of the Brazilian economy was more a result of internal than external factors.
 
-While the studies mentioned above are informative, their results are sub-optimal because their synthetic controls fall short of representing credible counterfactuals to the trend of GDP per capita in Brazil. State-of-the-art literature on the SCM (cited below) asserts that you must have an event that characterizes a clear, traceable break separating before and after scenarios. I argue that the intervention year (2003) in @carrasco2014decada is not ideal because there are no major shifts in economic policy-making during the first three years of Lula's first term as President. There are also no major shifts, breaks or shocks in Balassiano's choice of intervention year (2013).
+While the studies mentioned above are informative, their results are sub-optimal because their synthetic controls fall short of representing credible counterfactuals to the trend of GDP per capita in Brazil. State-of-the-art literature on the SCM (cited below) asserts that you must have an event that characterizes a clear, traceable break separating before and after scenarios. I argue that the intervention year (2003) in @carrasco2014decada is not ideal because there are no major shifts in economic policy-making during the first three years of Lula's first term as President. There are also no major shifts, breaks or shocks in the choice of intervention year (2013) in @balassiano2018recessao.
 
 The 2003-2005 period is marked by continuity in terms of economic policy-making. Similarly, 2013 is indeed the year before the beginning of the recession, but it is not marked by any specific event or structural changes in economic policy. Therefore, while @carrasco2014decada attempt to create a synthetic Brazil without the Workers Party and @balassiano2018recessao, a synthetic Brazil free of the negative domestic shocks of 2014-2016, their conclusions are weakened by sub-optimal pre-intervention fits. I argue at least that part of this noise is explained by the fact that they are not asking the question that the SCM is best equipped to answer: What is the impact of shifts in policy-making?
 
@@ -60,7 +60,7 @@ As several authors have pointed out, Mantega’s rise to the Ministry is a well-
 
 **Some of the core NEM policies were:** change from a floating exchange rate regime to a strongly managed one**;** recurrent adoption of artificial measures to achieve the primary surplus target, reducing fiscal policy transparency, along with a progressive reduction of the primary surplus**;** reduction, without the fundamentals allowing, of the real interest rate and, therefore, greater tolerance towards inflation^[Note that the Brazilian Central Bank only obtained full autonomy and independence from the Federal Executive in 2021. See https://www.reuters.com/article/us-brazil-centralbank/brazil-enacts-law-guaranteeing-central-bank-autonomy-idUKKBN2AP02D/]**;** widespread price controls and microeconomic interventionism, mainly in public utilities and the oil sectors, as an alternative mechanism to contain inflation**;** weakening and reduction of the role of regulatory agencies**;** expansion of subsidized credit, especially through BNDES, to stimulate investment, with strong discretion regarding the favored entities**;** reduction of openness to international trade**;** expansion of discretionary policies, such as tax breaks for specific sectors or selected goods, at the expense of horizontal policies that treat most sectors equally**;** increased public intervention and the role of Petrobras in the oil sector**;** intervention in the electricity sector to anticipate concession renewals**;** use of public banks to reduce the banking spread**;** indiscriminate use of national content requirements without concern for the repercussions of these measures on production chains, price levels, and the total factor productivity of the country [@pessoa2017debate; @holland2017matriz; @roriz2016efeitos]^[See @roriz2016efeitos in @bacha2016crise.].
 
-It is important to understand understand what led to this leadership change in the Finance Ministry and a shift in the overall policy-making strategy. In mid-2005, the political tide in Brazil changed, ultimately ending what some have called a fifteen-year trend in the choice of the economic policy playbook [@resende2018economia]. Such change started with the Mensalão crisis, one of the major corruption scandals that tainted Brazilian politics in the early 2000s. The Federal Executive administration was, in short, illegally buying votes in Congress in favor of their bills. Many high figures within the Workers Party had to step away from politics, and some were prosecuted. More importantly, Lula’s political calculations had changed. With the onset of a major scandal, incentives pushed the administration away from setting up long-term policies to using the state’s political and financial apparatus to guarantee the President’s chances of reelection. This new prioritization was clearly antagonistic to the policies Antonio Palocci, then Finance Minister, was advocating. He was, for example, pushing for a redefinition of budgetary rules with the objective of controlling the rate of increase of governmental expenditure, which had been increasing twice as fast as GDP since the 1990s [@werneck2014alternancia]. In early 2006, Palocci was accused of abuse of power and forced to step down. As mentioned above, Lula then replaced him with Guido Mantega.
+It is important to understand understand what led to this leadership change in the Finance Ministry and a shift in the overall policy-making strategy. In mid-2005, the political tide in Brazil changed, ultimately ending what some have called a fifteen-year trend in the choice of the economic policy playbook [@resende2018economia]. Such change started with the Mensalão crisis, one of the major corruption scandals that tainted Brazilian politics in the early 2000s. The Federal Executive administration was, in short, illegally buying votes in Congress in favor of their bills. Many high figures within the Workers Party had to step away from politics, and some were prosecuted. More importantly, Lula’s political calculations had changed. With the onset of a major scandal, incentives pushed the administration away from setting up long-term policies to using the state’s political and financial apparatus to guarantee the President’s chances of reelection. This new prioritization was clearly antagonistic to the policies Antonio Palocci, then Finance Minister, was advocating. He was, for example, pushing for a redefinition of budgetary rules with the objective of controlling the rate of increase of governmental expenditure, which had been increasing twice as fast as GDP since the 1990s [@werneck2014alternancia]^[See @werneck2014alternancia in @bacha2016crise.]. In early 2006, Palocci was accused of abuse of power and forced to step down. As mentioned above, Lula then replaced him with Guido Mantega.
 
 Therefore, we must keep in mind that the uncovering of a major corruption scandal and the possible increase in the level of perception of corruption in Brazil might confound the treatment/intervention timing and the impact of the New Economic Matrix on the Brazilian economy. This topic is further discussed below.
 
@@ -486,7 +486,7 @@ We can try to normalize this figure and focus on the 2003-2016 timeline during w
 plot.0316.base
 ```
 
-When taking both figures and the historic trend of Brazilian GDP per capita^[See the following for an expanded timeline of Figure 1: https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD?end=2022&locations=BR-AR-CL-MX&start=1990] into consideration, one is led to conlude that the take-off affirmation is, at best, relative. Compared to the Brazilian trends of the 1980s and 1990s, the 2003-2013 period can indeed characterize as a take-off. The growth trajectory in this period is much steadier and positive than in previous decades. Compared to its Latin American peers, however, the best definition would perhaps be an attempt to catch-up. Figure 2 shows that, even though the growth trend is more promising than that of the late twentieth century, Brazil still has the slowest growth trajectory when compared to Argentina, Chile, and the Latin American average.
+When taking both figures and the historic trend of Brazilian GDP per capita^[See the following for an expanded timeline of Figure 1: https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD?end=2022&locations=BR-AR-CL-MX&start=1990] into consideration, one is led to conlude that the take-off affirmation is, at best, relative. Compared to the Brazilian trends of the 1980s and 1990s, the 2003-2013 period can indeed characterize as a take-off. The growth trajectory in this period is much steadier and positive than in previous decades. Compared to its Latin American peers, however, the best definition would perhaps be an attempt to catch-up. Figure 2 shows that, even though the growth trend is more promising than that of the late 20^th^ century, Brazil still has the slowest growth trajectory when compared to Argentina, Chile, and the Latin American average.
 
 The table below summarizes the 2000-2005 country average and the country growth rate average for one of the key variables in this project: GDP per capita. It shows the period average for each of the 19 control countries and for Brazil.
 
@@ -577,6 +577,7 @@ t1_totable <- t1_totable %>%
 t1 <- t1_totable %>%
   select(country, gdpc, avg.grate) %>%
   kbl(caption="GDP per Capita Averages and Growth Averages",
+      position = "top", #trying to put figure caption on top, but it did not work. Sorry about that
       format= "html", #we can change this to "latex" and delete "Table 1" to title (latex automatically includes table count)      
       col.names = c("Country","GDP per Capita", "Growth Rate Avg."),
       align = c("l", "r", "r"), #if align = NULL, numeric columns are right-aligned, and other columns are left-aligned
@@ -592,7 +593,7 @@ The table and the two figures above indicate that comparative measures across di
 
 Finally, let's quickly visualize the summary statistics of the covariates for the sample in comparison to Brazil. The table below shows, for the last pre-intervention period, the mean, max, min, and standard deviation values for all countries in the sample (including Brazil), as well as the values of the same variables for Brazil in this same year.
 
-```{r table 2, echo=FALSE, results='markup', fig.cap="<span style='font-size: smaller; color: gray;'>Table 2. Notes: The first four rows show the results of the 2005 summary statistics for the entirety of the country sample. The fifth row shows the 2005 value of each variable for Brazil"}
+```{r table 2, echo=FALSE, results='markup', fig.cap="<span style='font-size: smaller; color: gray;'>Table 2. Notes: The first four rows show the results of the 2005 summary statistics for the entirety of the country sample. The fifth row shows the 2005 value of each variable for Brazil."}
 #11.1 First, let's subset out main df to only show 2005 values and the columns we will use to create the table
 t2.editing <- data.v6 %>% 
   filter(year == 2005) %>% 
@@ -708,7 +709,7 @@ t2 <- t2_totable %>%
 t2
 ```
 
-### The setup of the SCM
+### The Setup for the SCM
 
 Following @abadie2015comparative, I now describe the mathematical model of the synthetic control method. This shows how the SCM provides a test for or against the validity of the hypothesis described above. Furthermore, it also clarifies how the covariates of choice map onto the theoretical concepts that underpin the hypothesis.
 
@@ -742,7 +743,7 @@ The last parameter we must define addresses our variable of interest (GDP per ca
 
 We are now ready to derive our synthetic control.
 
-### Deriving the synthetic control
+### Deriving the Synthetic Control
 
 First, I apply a cross-validation technique to select the appropriate weights of the predictive covariates ($v_{m}$). This technique minimizes out-of-sample prediction errors. I divide the pre-intervention period into a training period from 1990 to 2001 and a validation period from 2002 to 2005. I then select the covariate weights such that the resulting model minimizes the root mean square prediction error (RMSPE) over the validation period. The RMSPE measures the lack of fit between the path of the variable of interest for a particular country (in this case, Brazil) and its synthetic counterpart (the estimated counterfactual)^[See @abadie2015comparative and @abadie2022synthetic for details, proofs, and intuition regarding the RMSPE.].
 
@@ -752,7 +753,7 @@ $$
 \min(RMSPE)=\min((\frac{1}{T_0}\sum^{T_0}_{t=1}(Y_{1t}-\sum_{j=2}^{J+1}w^{*}_{j}Y_{jt})^{2})^{\frac{1}{2}})
 $$ {#eq-xyp}
 
-Where, for this equation, $T_0$ is the validation period and $Y_{1t}$ is the observed level of GDP per capita in Brazil (defined as $j=1$) in period $t$.
+Where, for this equation, $T_0$ is the validation period and $Y_{1t}$ is the observed level of GDP per capita in Brazil (defined as $j=1$) in period $t$. This process selects the vector of covariate weights that best predict the trend of GDP per capita in Brazil during the period immediately before the dawn of the New Economic Matrix, when the unit of interest and the synthetic counterfactual are assumed to be impacted by the same determinants of the variable of interest.
 
 I now use the set of covariate weights $v_m$ selected in the previous step and apply it to the predictor data for our comparison units. The resulting model uses the calibrated covariate weights and selects the vector of weights $W^*=(w_2,..., w_{J+1})^{'}$ that minimizes the difference between the pre-intervention characteristics of the country of interest and the synthetic control: 
 
@@ -760,9 +761,9 @@ $$
 \min(\sum^{k}_{m=1}v_m(X_{1m}-X_{0m}W)^2)
 $$ {#eq-xyp}
 
-Choosing a particular value for $W$ is equivalent to choosing a synthetic control. This results in a synthetic control that approximates as best as mathematically possible the preintervention trend of GDP per capita in Brazil. If the resulting synthetic control has a preintervention GDP per capita trend that is similar to Brazil's, we will have succeed in our goal of building a reliable counterfactual to the Brazilian economy. Thus, since our counterfactual is a relibale synthetic version of the Brazilian economy during the preintervention period, but is not exposed to the intervention of interest during the postintervention period, we are able to estimate the effect of the intervention of interest on GDP per capita in Brazil as the difference in GDP per capita levels between Brazil and its synthetic counterpart in the years following the intervention.
+Choosing a particular value for $W$ is equivalent to choosing a synthetic control. This results in a synthetic control that approximates as best as mathematically possible the preintervention trend of GDP per capita in Brazil. If the resulting synthetic control has a pre-intervention GDP per capita trend that is similar to Brazil's, we will have succeeded in our goal of building a reliable counterfactual to the Brazilian economy. Thus, since our counterfactual is a reliable synthetic version of the Brazilian economy during the preintervention period, but is not exposed to the intervention of interest during the postintervention period, we are able to estimate the effect of the intervention of interest on GDP per capita in Brazil as the difference in GDP per capita levels between Brazil and its synthetic counterpart in the years following the intervention.
 
-In mathematical terms and following the definition of $Y_{jt}$ above, the synthetic control estimator of the effect of the treatment in any post intervention period is given by the comparison between the variable of interest for the unit of interest and the variable of interest for the synthetic control at that period. Recalling that $T_1$ is the post-intervention period, let $Y_1$ be a $(T_1\times1)$ vector collecting the post-intervention values for GDP per capita for the treated unit (Brazil). Let $Y_0$ be a $(T_1\times J)$ matrix, where column $J$ contains the post-intervention predicted values of GDP per capita for unit $J+1$. Then, the effect of the New Economic Matrix on GDP per capita in Brazil is estimated as the difference in GDP per capita levels between Brazil and its synthetic counterfactual in the years following the change in Finance Ministry, which marked the beginning of the implementation of NEM policies. Thus, now letting $T_0$ be the pre-intervention period, for any $t\geq T_0+1$, this effect is given by:
+In mathematical terms and following the definition of $Y_{jt}$ above, the synthetic control estimator of the effect of the treatment in any post-intervention period is given by the comparison between the variable of interest for the unit of interest and the variable of interest for the synthetic control at that period. Recalling that $T_1$ is the post-intervention period, let $Y_1$ be a $(T_1\times1)$ vector collecting the post-intervention values for GDP per capita for the treated unit (Brazil). Let $Y_0$ be a $(T_1\times J)$ matrix, where column $J$ contains the post-intervention predicted values of GDP per capita for unit $J+1$. Then, the effect of the New Economic Matrix on GDP per capita in Brazil is estimated as the difference in GDP per capita levels between Brazil and its synthetic counterfactual in the years following the change in Finance Ministry, which marked the beginning of the implementation of NEM policies. Thus, now letting $T_0$ be the pre-intervention period, for any $t\geq T_0+1$, this effect is given by:
 
 $$
 Y_{1t}-\sum^{J+1}_{j=2}w^{*}_{j}Y_{jt}
@@ -770,17 +771,17 @@ $$ {#eq-xyp}
 
 For proofs and technical details that corroborate the validity of the SCM in constructing a reliable counterfactual to our country of interest, refer to @abadie2021using; @abadie2010synthetic; @abadie2015comparative; @abadie2022synthetic; @botosaru2019role; and @ferman2020cherry.
 
-### A word on the choice of covariates and comparison units
+### A Word on the Choice of Covariates and Comparison Units
 
 The model for synthetic controls mathematically assigns weights to the comparison units and to the covariates of choice to provide the best possible approximation of the trend in the country of interest's variable of interest during the pre-intervention period. In this study, the variable of interest is PPP GDP per capita measured in constant 2017 international \$. @abadie2015comparative state that it is of crucial importance that synthetic controls closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention^[See @abadie2021using, @abadie2015comparative, and @botosaru2019role for proofs of why a perfect reproduction is not required.].
 
-My choice of covariates (listed in part 3) follows what @abadie2015comparative and @carrasco2014decada have defined as variables that are part of a standard set of economic growth predictors. However, in contrast to @carrasco2014decada, I opt to follow mainstream SCM literature and only include quantitative variables in my list of covariates.
+My choice of covariates (listed above) follows what @abadie2015comparative and @carrasco2014decada have defined as variables that are part of a standard set of economic growth predictors. However, in contrast to @carrasco2014decada, I opt to follow mainstream SCM literature and only include quantitative variables in my list of covariates.
 
 Literature on the SCM highlights that the choice of our comparison units requires care. Here, the country/unit of interest is Brazil. Recall that the synthetic control derived from the comparison units is meant to approximate the counterfactual of the country of interest that is free of the impacts of the intervention. Therefore, it is important to restrict the country pool of comparison units to countries with outcomes that are thought to be driven by similar processes as for the country of interest and that were not subject to large idiosyncratic shocks that did not affect the country of interest [@abadie2015comparative].
 
-Considering the above, my starting point for the selection of the comparison units is the IMF’s classification of Emerging and Developing Economies in the World Economic Outlook Database^[As in @carrasco2014decada.]. From this starting point, countries in this list were selected for the final country pool if they met one of three conditions: (1) geographic proximity and ties with the Brazilian economy, (2) sizeable population and considerable impact on the global economy, and (3) similar GDP per capita growth trends as Brazil’s in the pre-intervention period. As mentioned above, the final pool of comparison units is Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Turkey, Ukraine, and Uruguay^[Argentina and Venezuela fitted the geographic parameter but were excluded due to large idiosyncratic shocks during the study period. Indonesia, the Philippines, and Thailand have considerable populations but were excluded due to large shocks in the 1990s. Finally, Russia also has a considerable population size but was excluded due to idiosyncratic shocks and high levels of volatility in the variable of interest.].
+Considering the above, my starting point for the selection of the comparison units is the IMF’s classification of Emerging and Developing Economies in the World Economic Outlook Database^[As in @carrasco2014decada, but keeping in mind that I am using the most recent classification.]. From this starting point, countries in this list were selected for the final country pool if they met one of three conditions: (1) geographic proximity and ties with the Brazilian economy, (2) sizeable population and considerable impact on the global economy, and (3) similar GDP per capita growth trends as Brazil’s in the pre-intervention period. As mentioned above, the final pool of comparison units is Bolivia, Bulgaria, Chile, China, Colombia, Costa Rica, Ecuador, Egypt, India, Iran, Mexico, Pakistan, Paraguay, Peru, Poland, South Africa, Turkey, Ukraine, and Uruguay^[Argentina and Venezuela fitted the geographic parameter but were excluded due to large idiosyncratic shocks during the study period. Indonesia, the Philippines, and Thailand have considerable populations but were excluded due to large shocks in the 1990s. Finally, Russia also has a considerable population size but was excluded due to idiosyncratic shocks and high levels of volatility in the variable of interest.].
 
-### Main assumption and threats to inference
+### Main Assumption and Threats to Inference
 
 Having defined the period of analysis, the comparison units, the covariates, and the mathematical derivation, the main assumption of the model is as follows: 
 
@@ -788,49 +789,704 @@ Only units that are alike in both observed and unobserved determinants of the va
 
 Based on the above and the intense active discussions in academia regarding the inferential validity of synthetic controls^[See, for example, @botosaru2019role and @ferman2020cherry.], I must discuss three important considerations: 
 
-(1) On the upside, mathematical proofs show that synthetic controls with a very close fit between the counterfactual and the unit of interest control for the impacts of unobserved confounders. In other words, confounders that affect both Brazil and its counterfactual are taken into account in the derivation of the model. Note, however, that if another event/intervention that had its start in 2006 is what is actually impacting the GDP per capita trend in Brazil we would be unable to differentiate its impact from the impact of the NEM. One variable that fits this timeline and might have had a negative impact in the Brazilian economy is the perception of the level of corruption in the country. Starting in 2005, several corruption schemes were discovered, which might have affected domestic investment, foreign direct investment, and confidence towards governmental institutions.
+(1) On the upside, mathematical proofs show that synthetic controls with a very close pre-intervention fit for the variable of interest between the counterfactual and the unit of interest control for the impacts of unobserved confounders. In other words, confounders that affect both Brazil and its counterfactual are taken into account in the derivation of the model. Note, however, that if another event/intervention that had its start in or around 2006 is what is actually impacting the GDP per capita trend in Brazil, we would be unable to differentiate its impact from the impact of the NEM. One variable that fits this timeline and might have had a negative impact in the Brazilian economy is the perception of the level of corruption in the country. Starting in 2005, several corruption schemes were discovered, which might have affected domestic investment, foreign direct investment, and confidence towards governmental institutions. Below, I discuss one empirical extension that can rule out the possible confounding impact of the perception of levels of corruption.
 
-(2) If the synthetic control does not closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention and/or does not produce a similar trajectory of the variable of interest in comparison to Brazil over extended periods of time the resulting counterfactual fails to respect the main assumptions and, therefore, cannot be used as evidence for a causal relationship. This is the case in @carrasco2014decada and @balassiano2018recessao. In both papers, the authors do not present evidence showing how well the syntehtic control reproduces the pre-intervention values of covariates. Furthermore, both papers fail to derive a counterfactual with a similar pre-intervention trajectory of the variable of interest.
+(2) If the synthetic control does not closely reproduce the pre-intervention values that covariates with a large predictive power on the variable of interest take for the country affected by the intervention and/or does not produce a similar trajectory of the variable of interest in comparison to Brazil over extended periods of time, the resulting counterfactual fails to respect the main assumptions and, therefore, cannot be used as evidence for a causal relationship. This is the case in @carrasco2014decada and @balassiano2018recessao. In both papers, the authors do not present evidence showing how well the syntehtic control reproduces the pre-intervention values of covariates. Furthermore, both papers fail to derive a counterfactual with a similar pre-intervention trajectory for the variable of interest compared to that of Brazil.
 
-(3) Traditional exercises that test for levels of statistical inference and significance are not possible within the framework of SCM. There are, however, tests that measure the significance and robustsness of the results derived with synthetic controls. This leads our next sub-section. **CHANGE THIS TO ENCOMPASS LEAD IN FOR EMPIRICAL EXTENSIONS OF INFERENCE TESTS (DEPENDENCE OF RESULTS ON ONE OR A FEW COUNTRIES IS A LIMITATION, THUS USE EMPIRICAL EXTENSION OF ROBUSTNESS TEST)
+(3) Traditional exercises that test for levels of statistical significance are not possible within the framework of the SCM. This is one of the main limitations of the method. There are, however, other ways to measure the significance and robustness of the results derived with synthetic controls. Therefore, I will employ two other empirical extensions to add credibility to the inferential conclusions of the model. One will address the possibility that the final results are too reliant on any given country from the country pool, while the other investigates the significance of the results (i.e., Was the estimated size of the impact of the NEM a product of random chance?).
 
-### Inference tests and empirical extension
+### Empirical Extensions
 
-Following @abadie2010synthetic, @abadie2015comparative, and @abadie2021using, I will perform two different inference tests as empirical extensions to evaluate the credibility of my results in my final submission. If my model passes these tests, this adds credibility and trustworthiness to my results. Additionally, I will perform one additional empirical extension by deriving an alternative synthetic control model that measures the impact of the NEM on a different variable of interest. 
+Following @abadie2010synthetic, @abadie2015comparative, and @abadie2021using, I will perform two different inference tests as empirical extensions to evaluate the credibility of my results. If my model passes these tests, this adds credibility and trustworthiness to estimated effect of the New Economic Matrix on GDP per capita calculated through Equation (3). Additionally, I discuss one additional empirical extension that takes the from of an alternative synthetic control model that measures the impact of the NEM on a different variable of interest.
 
-#### Placebo study
+#### Placebo Study
 
 An in-space placebo study reassigns the treatment in the data to each one of the comparison units. This will allow me to obtain synthetic control estimates for countries that did not experience the event of interest, namely the New Economic Matrix. While some countries in our pool were exposed to similar versions of some of the policies related to the NEM, nowhere did the policy-making strategy embrace as many aspects of economic policy and represent such a clear break with previous trends as in Brazil.
 
-Applying the synthetic control estimation process to each of our comparison units in the country pool allows for the comparison of the estimated effect of the NEM in Brazil to the distribution of placebo effects obtained for other countries. This is done by comparing the ratios of post-intervention RMSPE and pre-intervention RMSPE for Brazil and for all the units in the country pool. Recall that the RMSPE measures the lack of fit between the path of the variable of interest (in this case, GDP per capita) for a particular country and its synthetic counterpart. I argue that Brazil was the only country that underwent the intervention characterized by the New Economic Matrix. Therefore, the effect of the NEM on the Brazilian economy will be considered significant if the resulting RMSPE ratio for Brazil is large compared to the distribution for the placebo effects^[See @abadie2015comparative for details on RMSPE ratio placebo study.].
+Applying the synthetic control estimation process to each of our comparison units in the country pool allows for the comparison of the estimated effect of the NEM in Brazil to the distribution of placebo effects obtained for other countries. This is done by comparing the ratios of post-intervention RMSPE and pre-intervention RMSPE for Brazil and for all the units in the country pool. Recall that the RMSPE measures the lack of fit between the path of the variable of interest (in this case, GDP per capita) for a particular country and its synthetic counterpart. I argue that Brazil was the only country that underwent the intervention characterized by the New Economic Matrix. Therefore, the effect of the NEM on the Brazilian economy will be considered significant if the resulting RMSPE ratio for Brazil is large compared to the distribution for the placebo effects^[See @abadie2015comparative for details on RMSPE ratio placebo study.]. If successful, this test indicates that the main results were not a product of random chance.
 
-#### Robustness test
+#### Robustness Test
 
-The objective of the robustness test is to check the sensitivity of my main results to changes in the country weights, $W^*$. I will iteratively re-estimate the model to construct a counterfactual of Brazil, omitting in each iteration one of the countries that were assigned at least 10\% weights in my main model. According to @abadie2015comparative, by excluding countries that received a large positive weight, we sacrifice some of the goodness of the pre-intervention fit, but this sensitivity check allows for the evaluation of the extent to which results are driven by any particular control country^[Also see @abadie2021using for details on the robustness test.]. If the resulting trend of the impact of the NEM is similar for all the models that create a counterfactual without using one of high weight countries in the main model, this shows that the results are robust to the exclusion of any particular country that was assigned a high predictive weight in main counterfactual.
+The objective of the robustness test is to check the sensitivity of my main results to changes in the country weights, $W^*$. I will iteratively re-estimate the model to construct a counterfactual of Brazil, omitting in each iteration one of the countries that were assigned at least 10\% weights in my main model. According to @abadie2015comparative, by excluding countries that received a large positive weight, we sacrifice some of the goodness of the pre-intervention fit, but this sensitivity check allows for the evaluation of the extent to which results are driven by any particular control country^[Also see @abadie2021using for details on the robustness test.]. If the resulting trend of the impact of the NEM is similar for all the models that create a counterfactual without using one of high weight countries in the main model, this shows that the results are robust to the exclusion of any particular country that was assigned a high predictive weight in the main counterfactual.
 
-#### Empirical Extension
+#### Alternative synthetic control
 
-This third empirical extension has proved to be a challenge. Due to the data requirements for the application of synthetic controls, it has proved to be challenging to find another variable with sufficient data availability across the entirety of my country pool to be used as an alternative variable of interest. The variables I am currently considering to be the object of study of this task are: Inflation rate, Human capital index, and Poverty headcount ratio at $3.65 a day (2017 PPP) (% of population).
+As mentioned above, several corruption scandals were uncovered in Brazil during the 2005-2018 period, starting with the Mensalão. These events might have led to an increase in the risk-aversion levels of domestic agents and a decrease in the willingness of foreign agents to do business in Brazil. If that was the case, then it is possible that this change in the perception of corruption levels in Brazilian governmental institutions could have impacted output levels and, by consequence, the GDP per capita trend of the country. 
 
-## Next Steps (mainly notes for myself)
+The timing of these corruption scandals and the connection of Mensalão with the dawn of the New Economic Matrix might be confounding the results of the intervention in the setup utilized in this project. Applying the SCM to measure the impact of the NEM on an alternative variable of interest that would not have been impacted by the increase in the perception of corruption is a promising strategy to rule out the possibility of this confounding effect. A good candidate for the variable of interest in this alternative exercise is the Human Capital Index (HCI), calculated by the World Bank and available in both the Human Capital Index Database and the World Development Indicators Database. According to the World Bank, the HCI calculates the contributions of health and education to worker productivity. The final index score ranges from zero to one and measures the productivity as a future worker of child born today relative to the benchmark of full health and complete education. This index is calculated through the analysis of six variables that measure different components of health and educational standards in a country^[See https://datacatalog.worldbank.org/search/dataset/0038030 for details about the Human Capital Index.].
 
-- Formatting to-dos on the website
+While one could argue that the HCI is not perfectly independent from the impact of changes in the perceptions of the level of corruption in a country, it is definitely less sensitive to it than GDP per capita. The variables that comprise the HCI are not as affected by an increase in the perceived level of corruption as the forces (described above) that can arguably negatively impact GDP per capita. On the other hand, if the policies of the New Economic Matrix had a negative impact in the Brazilian economy and the country's rate of development, one could expect it to negatively impact the HCI trend in Brazil.
 
-- Review my code and run the main synthetic control model
+## Findings
 
-- Review my code and run the inference tests
+### The Effects of the New Economic Matrix
 
-- Make a final decision on the variable for the empirical extension. Run model with that as variable of interest and report results
+Here I present the results of applying the sample described in the *Data and Sample* section of the *Research Design* to the mathematical model described in the *Deriving the Synthetic Control* section of the *Research Design*.
 
-- Learn how to create tables in qmd that correctly render into the website
+First, let's analyze the solution to the minimization problem characterized in Equation (1). The weights that solve the cross-validation exercise above indicate that the most important predictors from our list of covariates are: GDP per capita (0.363); Agriculture, forestry, and fishing, value added (0.319); Net barter terms of trade (0.179); Unemployment (0.069); Industry (including construction), value added (0.042); Trade Openness (0.020); Inflation (0.007); and Gross capital formation (0.001). Recall that the country pool is comprised of developing countries that are similar to Brazil. Therefore, it makes sense that the GDP per capita in these countries has a high prediction power of GDP per capita in Brazil. On the other hand, one should worry if the model is too reliant on GDP per capita (for example, with a weight of 0.6 or more, which is not the case in my model). Since a good balance in terms of both covariates and pre-treatment outcomes implies tighter bounds on the bias of the synthetic control estimator, a balanced prediction across multiple covariates is preferred^[Refer to @botosaru2019role for in-depth definitions, explanations, and proofs regarding the balance of covaritates and why a perfect match between pre-intervention values of covariates for the synthetic counterfactual and the country of interest is not necessary to infer causation in the results. This is an important discussion that goes beyond the scope and length of this piece.]. Having value added of agriculture as the second-most important predictor is another positive sign, as it is one of the most important sectors in the Brazilian economy and the most relevant one in terms of exports.
 
-## My questions
+I now use this vector $v_m$ of covariate weights, apply it to the predictor data in the country pool and select the vector of country weights $W^*=(w_2,..., w_{J+1})^{'}$ that solves the minimization problem characterized in Equation (2). The synthetic counterfactual of Brazil is a weighted average of Peru (0.28), South Africa (0.28), Mexico (0.23), Turkey (0.16), Pakistan (0.03), and Colombia (0.02). All other countries in the country pool obtain zero weights.
 
-- How to I change the main title of my website in the top left part? It currently shows "scm-application-rodrigo-veiga" which is the name of the folder inside my git and the name of my Rproj file.
+Table 3 compares the pre-NEM characteristics of Brazil to those of the synthetic counterfactual of Brazil and to those of the average of the same sample of Latin American countries used in Figures 1 and 2 for the predictors that are assigned weights of at least 2\% in the cross-validation exercise. This analysis suggests that the synthetic version of Brazil constructed by the model provides a better comparison for Brazil than the Latin American average.
 
-- How do I add the hyperlink that you have in the bottom right of all your website pages which takes the reader directly to the git repository that created the site?
+```{r scm derivation, include=FALSE}
+#in this chunk I perform the derivation of the main synthetic control and calculate the values to be included in table 3
 
-- How do I properly create tables in a qmd file that render correctly into the website? I tried using the Xtable function or just writing LaTex syntax as I usually do in rmd files (and it works perfectly there), but that did not work in this qmd, so I had to add an image of the table.
+#12. subsetting years of interest
+#Period of choice: 1990-2016
+#I will subset 1985-2018 to make it easier for me to create new versions if I want
 
-end of the assignment :)
+data.v6 <- data.v6 %>% 
+  filter(year >= 1985)
+
+#13. changing index numbers
+unique(data.v6$country)
+
+data.v6.ready <- data.v6 %>% 
+  mutate(index = case_when(
+    country == "BGR" ~ 1,
+    country == "BOL" ~ 2,
+    country == "BRA" ~ 3,
+    country == "CHL" ~ 4,
+    country == "CHN" ~ 5,
+    country == "COL" ~ 6,
+    country == "CRI" ~ 7,
+    country == "ECU" ~ 8,
+    country == "EGY" ~ 9,
+    country == "IND" ~ 10,
+    country == "IRN" ~ 11,
+    country == "MEX" ~ 12,
+    country == "PAK" ~ 13,
+    country == "PER" ~ 14,
+    country == "POL" ~ 15,
+    country == "PRY" ~ 16,
+    country == "TUR" ~ 17,
+    country == "UKR" ~ 18,
+    country == "URY" ~ 19,
+    country == "ZAF" ~ 20,
+  ))
+
+#checking indexes
+unique(data.v6.ready$index)
+
+#14. Mapping necessary data conditions to decide if I use special predictors
+#Necessary data conditions:
+#1- Variable of interest (gdpc): no NAs for any country nor year
+#2- Covariates: info on at least one year for all countries
+
+#checking condition 1
+data.check.gdpc <- data.v6.ready %>% 
+  filter(is.na(gdpc))
+
+unique(data.check.gdpc$year) #no missing data on gdp per capita from 1990 onwards, perfect!
+
+#15. Visually checking condition 2
+#Here is where I decided not to use debt as one of the covariates. 
+#Brazil only has debt starting in 2001, does not go up that much, 
+#and I don't think its the most important predictor of gdp
+#Training period for cross validation will have to go from 1990 until 2001 to fulfill condition (2) for all covariates
+
+#16. RUNNING SCM
+#In this version pre-treatment years are 1990-2006
+#I am using 2006 as intervention year due to change in policy justifications and event of change in finance ministry
+
+## pick v by cross-validation
+# data setup for training model
+dataprep.out.v6 <-
+  dataprep(
+    foo = data.v6.ready,
+    predictors    = c("agva", "tradeop", "gdpc", "gcf", "indva", "infrate", "termstrade", "unemp"),
+    dependent     = "gdpc",
+    unit.variable = "index",
+    time.variable = "year",
+    treatment.identifier = "BRA",
+    controls.identifier = unique(data.v6.ready$country[-which(data.v6.ready$country == "BRA")]),
+    time.predictors.prior = 1990:2001, #this is training period
+    time.optimize.ssr = 2002:2006, #this is validation period
+    time.plot = c(1990:1994,1996:2018), #full period in the analysis 
+    unit.names.variable = "country"
+  )
+
+# fit training model
+synth.out.v6.prep <- 
+  synth(
+    data.prep.obj=dataprep.out.v6,
+    Margin.ipop=.005,Sigf.ipop=7,Bound.ipop=6
+  ) #this gives my solution v from cross validation used in table 2 of abadie 2015; sequence of v weights correspond to sequence in predictors argument
+
+#also gives MSPE (LOSS V): 6586.884
+
+#checking choices of covariate weights
+names(synth.out.v6.prep)
+synth.out.v6.prep$solution.v #choice of v for this version: looks pretty reasonable. Brazil is big on agriculture, so it makes sense!
+
+
+# data prep for main model
+dataprep.out.v6.main <-
+  dataprep(
+    foo = data.v6.ready,
+    predictors    = c("agva", "tradeop", "gdpc", "gcf", "indva", "infrate", "termstrade", "unemp"),
+    dependent     = "gdpc",
+    unit.variable = "index",
+    time.variable = "year",
+    treatment.identifier = "BRA",
+    controls.identifier = unique(data.v6.ready$country[-which(data.v6.ready$country == "BRA")]),
+    time.predictors.prior = 2002:2006, #validation period (time.opt.ssr above) in cross validation (counts intervention year)
+    time.optimize.ssr = 1990:2005, #full pre intervention period (DOES NOT COUNT INTERVENTION YEAR)
+    time.plot = c(1990:1994,1996:2018), #full period in the analysis
+    unit.names.variable = "country"
+  )
+
+#fitting main model with v from training model
+synth.out.v6.main <- synth(
+  data.prep.obj=dataprep.out.v6.main,
+  custom.v=as.numeric(synth.out.v6.prep$solution.v)
+) #this gives my w weight for each country
+#my thing gives MSPE (LOSS V): 93597.19 
+
+#17. QUICK SUMMARY CODE-----------------------------
+#gaps
+gaps.v6 <- dataprep.out.v6.main$Y1plot-(
+  dataprep.out.v6.main$Y0plot%*%synth.out.v6.main$solution.w
+)
+
+gaps.v6
+
+## plot the gaps (treated - synthetic)
+gaps.plot(dataprep.res = dataprep.out.v6.main, synth.res = synth.out.v6.main, Ylim = c(-5800,5800)) #visualizing equation (3)
+abline(v=2005 ,lty="dotted")
+
+#tables
+synth.tables.v6 <- synth.tab(
+  dataprep.res = dataprep.out.v6.main,
+  synth.res = synth.out.v6.main)
+print(synth.tables.v6)
+
+#result graph
+## plot in levels (treated and synthetic)
+path.plot(dataprep.res = dataprep.out.v6.main, 
+          synth.res = synth.out.v6.main, 
+          Ylim = c(3000, 20000),
+          Legend.position=c("bottomright"),
+          Main = "v6") #easy version of figure 2
+abline(v=2005 ,lty="dotted")
+#---- END of quick summary code ----#
+
+#18. Preparing table 3
+
+#18.1 Creating LaTam predictor means for Table 3
+
+#selecting covariates
+latam_means <- data.v6.vars.step7 %>% 
+  select(index, 
+         country, 
+         year, 
+         gdpc, 
+         agva,
+         termstrade,
+         unemp,
+         indva,
+         tradeop,
+         infrate,
+         gcf)
+
+#selecting countries
+latam_means <- latam_means %>%
+  filter(country %in% c("ARG",
+                        "BOL",
+                        "CHL", 
+                        "COL", 
+                        "CRI", 
+                        "ECU", 
+                        "MEX", 
+                        "PRY", 
+                        "PER",
+                        "URY")) #original dataset has no information for venezuela
+
+unique(latam_means$country)
+
+#selecting years
+latam_means <- latam_means %>% 
+  filter(year >= 2000) %>% 
+  filter(year <= 2005)
+
+#creating average
+table2.lat.avg <- aggregate(gdpc ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+#agva
+table2.lat.avg.ag <- aggregate(agva ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+table2.lat.avg.ag.tobind <- table2.lat.avg.ag %>% 
+  select(agva)
+
+#termstrade
+table2.lat.avg.termstrade <- aggregate(termstrade ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+table2.lat.avg.termstrade.tobind <- table2.lat.avg.termstrade %>% 
+  select(termstrade)
+
+#unempv2
+table2.lat.avg.unempv2 <- aggregate(unemp ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+table2.lat.avg.unempv2.tobind <- table2.lat.avg.unempv2 %>% 
+  select(unemp)
+
+#indva
+table2.lat.avg.indva <- aggregate(indva ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+table2.lat.avg.indva.tobind <- table2.lat.avg.indva %>% 
+  select(indva)
+
+#tradeop
+table2.lat.avg.tradeop <- aggregate(tradeop ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+table2.lat.avg.tradeop.tobind <- table2.lat.avg.tradeop %>% 
+  select(tradeop)
+
+#infrate
+table2.lat.avg.infrate <- aggregate(infrate ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+table2.lat.avg.infrate.tobind <- table2.lat.avg.infrate %>% 
+  select(infrate)
+
+#gcfv4
+table2.lat.avg.gcfv4 <- aggregate(gcf ~ year, data = latam_means, FUN = mean, na.rm = TRUE)
+
+table2.lat.avg.gcfv4.tobind <- table2.lat.avg.gcfv4 %>% 
+  select(gcf)
+
+#binding year averages
+table2.lat.avg.years <- cbind(table2.lat.avg,
+                              table2.lat.avg.ag.tobind,
+                              table2.lat.avg.termstrade.tobind,
+                              table2.lat.avg.unempv2.tobind,
+                              table2.lat.avg.indva.tobind,
+                              table2.lat.avg.tradeop.tobind,
+                              table2.lat.avg.infrate.tobind,
+                              table2.lat.avg.gcfv4.tobind)
+
+#calculating the means for predictors with 2% weight or more
+mean(table2.lat.avg.years$gdpc) #11828.45
+
+mean(table2.lat.avg.years$agva) #8.452563
+
+mean(table2.lat.avg.years$termstrade) #87.10887
+
+mean(table2.lat.avg.years$unemp) #8.845074
+
+mean(table2.lat.avg.years$indva) #29.32424
+
+mean(table2.lat.avg.years$tradeop) #54.06174
+
+#18.2 calculating gdpc mean for Brazil and Synthetic Brazil
+#-brazil
+br.gdpc.t2 <- data.v6.ready %>% 
+  select(country, year, gdpc) %>% 
+  filter(country == "BRA") %>% 
+  filter(year >= 2000 & year <= 2005)
+
+mean(br.gdpc.t2$gdpc) #11887.83
+
+#-synthetic (subtracting from gaps that results of scm derivation)
+#a negative number for the gap mean brazil's gdp is lower than that of the counterfactual
+#therefore, to get to the predicted counterfactual gdp, we subtract the gap from brazil's gdp for the respective years 
+brsynth.gdpc.t2 <- br.gdpc.t2
+
+brsynth.gdpc.t2$gdpc[1] <- brsynth.gdpc.t2$gdpc[1] - gaps.v6[10]
+brsynth.gdpc.t2$gdpc[2] <- brsynth.gdpc.t2$gdpc[2] - gaps.v6[11]
+brsynth.gdpc.t2$gdpc[3] <- brsynth.gdpc.t2$gdpc[3] - gaps.v6[12]
+brsynth.gdpc.t2$gdpc[4] <- brsynth.gdpc.t2$gdpc[4] - gaps.v6[13]
+brsynth.gdpc.t2$gdpc[5] <- brsynth.gdpc.t2$gdpc[5] - gaps.v6[14]
+brsynth.gdpc.t2$gdpc[6] <- brsynth.gdpc.t2$gdpc[6] - gaps.v6[15]
+
+mean(brsynth.gdpc.t2$gdpc) #11894.47
+
+#18.3 creating df for table 3
+synth.table2 <- synth.tables.v6$tab.pred[-6,]
+synth.table2 <- synth.table2[-4,]
+
+# Replace means for LaTam sample (computed externally)
+synth.table2[,3]          <- c(mean(table2.lat.avg.years$agva),
+                               mean(table2.lat.avg.years$tradeop),
+                               mean(table2.lat.avg.years$gdpc),
+                               mean(table2.lat.avg.years$indva),
+                               mean(table2.lat.avg.years$termstrade),
+                               mean(table2.lat.avg.years$unemp))
+colnames(synth.table2)[3] <- "Latin America"
+rownames(synth.table2) <- c("Agriculture, v.a.","Trade openness",
+                                     "GDP per capita","Industry, v.a.",
+                                     "Terms of trade","Unemployment")
+synth.table2[3,1] <- mean(br.gdpc.t2$gdpc)
+synth.table2[3,2] <- mean(brsynth.gdpc.t2$gdpc)
+
+#18.4 calculating % diff between Brazil and Synthetic Brazil
+#agva
+agva.tab.diff <- abs(round(((synth.table2[1,1]-synth.table2[1,2])/synth.table2[1,2]),4)*100)
+agva.tab.diff #8.47
+
+#tradeopen
+tradeop.tab.diff <- abs(round(((synth.table2[2,1]-synth.table2[2,2])/synth.table2[2,2])*100,2))
+tradeop.tab.diff #40.96
+
+#gdpc
+gdpc.tab.diff <- abs(round(((synth.table2[3,1]-synth.table2[3,2])/synth.table2[3,2])*100,2))
+gdpc.tab.diff #0.06
+
+#indva
+indva.tab.diff <- abs(round(((synth.table2[4,1]-synth.table2[4,2])/synth.table2[4,2])*100,2))
+indva.tab.diff #19.71
+
+#ttrade
+ttrade.tab.diff <- abs(round(((synth.table2[5,1]-synth.table2[5,2])/synth.table2[5,2])*100,2))
+ttrade.tab.diff #0.28
+
+#unemp
+unemp.tab.diff <- abs(round(((synth.table2[6,1]-synth.table2[6,2])/synth.table2[6,2])*100,2))
+unemp.tab.diff #7.07
+
+#creating column for % diff
+synth.table2 <- as.data.frame(synth.table2)
+synth.table2 <- synth.table2 %>% 
+  mutate(pct.diff = c(agva.tab.diff, 
+                      tradeop.tab.diff,
+                      gdpc.tab.diff,
+                      indva.tab.diff,
+                      ttrade.tab.diff,
+                      unemp.tab.diff))
+#creating variable name column
+synth.table2 <- synth.table2 %>% 
+  mutate(vars = c("Agriculture, v.a.",
+                  "Trade openness",
+                  "GDP per capita",
+                  "Industry, v.a.",
+                  "Terms of trade",
+                  "Unemployment"))
+
+#-putting in ideal row and column order
+
+#ideal column order
+synth.table2.ready <- synth.table2 %>% 
+  select(vars, Treated, Synthetic, pct.diff, `Latin America`)
+
+#ideal row order (in decreasing v, weight)
+synth.table2.ready.f <- synth.table2.ready[c(3, 1, 5, 6, 4, 2),]
+
+#rounding to facilitate visualization
+synth.table2.ready.f$Synthetic <- round(synth.table2.ready.f$Synthetic,1)
+synth.table2.ready.f$Treated <- round(synth.table2.ready.f$Treated,1)
+synth.table2.ready.f$`Latin America` <- round(synth.table2.ready.f$`Latin America`,1)
+
+```
+
+```{r table 3, echo=FALSE, results='markup', fig.cap="<span style='font-size: smaller; color: gray;'>Table 3. Notes: Rounded averages for the 2000-2005 period. The Difference column represents the percentage difference between the estimated averages for the Synthetic Control and the averages for Brazil."}
+#19. creating table 3
+synth.table2.ready.f <- synth.table2.ready.f %>%
+  rownames_to_column(var = "row_number")
+
+synth.table2.ready.f <- synth.table2.ready.f %>% 
+  select(!row_number)
+
+t3 <- synth.table2.ready.f %>%
+  kbl(caption="Economic Growth Predictor Means for Pre-NEM Period",
+      format= "html", #we can change this to "latex" and delete "Table 1" to title (latex automatically includes table count)      
+      col.names = c("","Brazil", "Synthetic Brazil", "% Difference", "Latin America"),
+      align = c("l", "r", "r", "r", "r"), #if align = NULL, numeric columns are right-aligned, and other columns are left-aligned
+      longtable = T,
+      tabular = "longtable",
+      digits = 2,
+      booktabs = T) %>% 
+  kable_classic(full_width = F, html_font = "helvetica")
+t3
+```
+
+Furthermore, Table 3 shows that my synthetic control respects one of the most important necessary validity conditions for the method mentioned in point (2) of the *Main Assumption and Threats to Inference* section of the *Research Design*. The model very closely reproduces the 2000-2005 average for the covariates with the four largest predictive powers derived in the cross-validation, namely GDP per capita, value added of Agriculture, Net Barter Terms of Trade, and Unemployment.
+
+Figure 3 summarizes the main results of this project. It displays the GDP per capita trajectory of Brazil and its synthetic counterfactual for the 1990-2018 period. The counterfactual constructed in the model very closely reproduces the GDP per capita trend during the pre-intervention years. While there is some lack of fit during the 1990-1997 period, the model demonstrates the same trends and characteristics as the Brazilian economy from 1998 until the end of the pre-intervention period. This trend, paired with the close fit of Table 3 and the satisfactory results of the inference tests below, demonstrates that there exists a combination of other developing economies that reproduces the economic attributes of Brazil before the advent of the NEM. This indicates that the model represents a reliable counterfactual that was not exposed to the New Economic Matrix. 
+
+```{r graph 3, echo=FALSE, results='markup', fig.cap='Figure 3'}
+#20. Here I construct the graph for the main result in my synthetic control study, derived in step 16 above
+Text.height <- 7000
+Cex.set <- .8
+years <- 1990:2018
+
+synthY0 <- (dataprep.out.v6.main$Y0%*%synth.out.v6.main$solution.w)
+plot(c(1990:1994,1996:2018),dataprep.out.v6.main$Y1plot,
+     type="l",ylim=c(3000,20000),col="green",
+     lty="solid",
+     ylab ="Per-Capita GDP, PPP (2017 int. $)",
+     xlab ="Year",
+     xaxs = "i", yaxs = "i",
+     lwd=2,
+     xaxt = "n",
+     main = "Trends in GDP per Capita: Brazil vs. Synthetic Brazil"
+)
+axis(1, at = years[seq(1, length(years), by = 3)], labels = years[seq(1, length(years), by = 3)])
+lines(c(1990:1994,1996:2018),synthY0,col="black",lty="dashed",lwd=2)
+abline(v=2005,lty="dotted")
+legend(x="bottomright",
+       legend=c("Brazil","Synthetic Brazil")
+       ,lty=c("solid","dashed"),col=c("green","black")
+       ,cex=.8,bg="white",lwd=c(2,2))
+arrows(2004,Text.height,2004.8,Text.height,col="black",length=.1)
+text(1999.6,Text.height,"End of Pre-intervention Period",cex=Cex.set)
+```
+
+My estimate of the effect of the New Economic Matrix in Brazil is given by the difference between the Brazilian trend and its counterfactual in the post-intervention period. The gap between the post-intervention trends is a visual representation of Equation 3. The NEM policies did not have much of an effect in the first two years after Mantega’s rise to the Finance Ministry, and Brazil even outperformed its counterfactual in the aftermath of the global financial crisis. This is in line with the arguments of @werneck2014alternancia, who states that expansionary fiscal policies artificially generated a demand boom in the early 2010s. The author affirms that this created a lag until the constraints in supply, low productivity, lack of infrastructure, low external competitiveness, and a rising tax burden evidenced the shortcomings of policies associated with the New Economic Matrix. My results support this and the findings of other authors discussed in the *Introduction*. Following @abadie2015comparative, the estimated effect of the intervention is computed as the percentage difference between the GDP per capita in the country of interest and the GDP per capita of its synthetic counterfactual in the last sample period. In 2018, GDP per capita in the synthetic counterfactual of Brazil – that was not exposed to the policies of the NEM – is estimated to be about 16.5\% higher than in the actual Brazil. In other words, according to this model, GDP per capita in Brazil would have been about 2,400 USD higher in 2018, had the New Economic Matrix not been implemented.
+
+## Empirical Extensions
+
+I now present the results of two of the empirical extensions. Furthermore, I discuss the constraints that impeded the calculation of the third empirical extension at this moment, which, by consequence, points to the next steps of my research on the topic of this project.
+
+### Placebo Study
+
+Figure 4 shows the post-intervention and pre-intervention root mean square prediction error ratio for Brazil and each country in the country pool. Countries with positive weights in the synthetic control are highlighted in red. Brazil clearly stands out as the country with the highest RMSPE ratio. Brazil's post-intervention gap is about five times larger than the pre-intervention gap, which represents a ratio that is 125\% larger than the average ratio for placebo effects. Therefore, based on the above explanation of the Placebo Study, the test suggests that the effect of the NEM on the Brazilian economy is indeed considered significant.
+
+```{r placebo study, include=FALSE}
+#21. Coding/calculating the Placebo Study test
+
+#looping across control units
+storegaps <- #nrow is number of years, ncol is number of control countries
+  matrix(NA,
+         length(c(1990:1994,1996:2018)),
+         length(unique(data.v6.ready$index))-1 #-1 to take country of interest out 
+  )
+rownames(storegaps) <- c(1990:1994,1996:2018) #naming the rows of the dataset created above
+i <- 1
+co <- unique(data.v6.ready$index) 
+
+for(k in unique(data.v6.ready$index) [-3]){ #-3 to cut Brazil, since we calculated its gaps above
+  
+  # data prep for training model
+  dataprep.out <-
+    dataprep(
+      foo = data.v6.ready,
+      predictors    = c("agva", "tradeop", "gdpc", "gcf", "indva", "infrate", "termstrade", "unemp"),
+      dependent     = "gdpc",
+      unit.variable = 1,
+      time.variable = 3,
+      treatment.identifier = k, #country to be used as interest in each loop
+      controls.identifier = co[-which(co==k)], #cutting country of interest in each loop out of country pool
+      time.predictors.prior = 1990:2001, #this is training period
+      time.optimize.ssr = 2002:2006, #this is validation period
+      unit.names.variable = 2,
+      time.plot = c(1990:1994,1996:2018), 
+    )
+  
+  # fit training model
+  synth.out.t <-
+    synth(
+      data.prep.obj=dataprep.out,
+      Margin.ipop=.005,Sigf.ipop=7,Bound.ipop=6
+    )
+  
+  # data prep for main model
+  dataprep.out <-
+    dataprep(
+      foo = data.v6.ready,
+      predictors    = c("agva", "tradeop", "gdpc", "gcf", "indva", "infrate", "termstrade", "unemp"),
+      dependent     = "gdpc",
+      unit.variable = 1,
+      time.variable = 3,
+      treatment.identifier = k,
+      controls.identifier = co[-which(co==k)],
+      time.predictors.prior = 2002:2006, #validation period (time.opt.ssr there) in cross validation (counts intervention year)
+      time.optimize.ssr = 1990:2005, #full pre intervention period (DOES NOT COUNT INTERVENTION YEAR)
+      unit.names.variable = 2,
+      time.plot = c(1990:1994,1996:2018), 
+    )
+  
+  # fit main model
+  synth.out <- synth(
+    data.prep.obj=dataprep.out,
+    custom.v=as.numeric(synth.out.t$solution.v)
+  )
+  
+  storegaps[,i] <-  
+    dataprep.out$Y1plot-
+    (dataprep.out$Y0plot%*%synth.out$solution.w) #so each column in storegaps is the equivalent of each country of gaps.v6 for brazil
+  i <- i + 1
+} # close loop over control units
+d <- data.v6.ready[order(data.v6.ready$index,data.v6.ready$year),]
+colnames(storegaps) <- unique(d$country)[-3]
+storegaps <- cbind(gaps.v6,storegaps) #binding gap for Brazil with gap for others
+colnames(storegaps)[1] <- c("BRA")
+
+# compute ratio of post-reunification RMSPE 
+# to pre-reunification RMSPE                                                  
+rmse <- function(x){sqrt(mean(x^2))}
+preloss <- apply(storegaps[1:15,],2,rmse) #the two here indicates that should perform operation in the columns
+postloss <- apply(storegaps[16:28,],2,rmse)
+colors.rmspe <- c("black",
+                  "red",
+                  "black",
+                  "black",
+                  "black",
+                  "black",
+                  "black",
+                  "black",
+                  "black",
+                  "red",
+                  "black",
+                  "red",
+                  "black",
+                  "black",
+                  "red",
+                  "black",
+                  "red",
+                  "black",
+                  "red",
+                  "black")
+
+rmspe.ratio <- sort(postloss/preloss)
+
+#calculating mean and comparing to brazil
+ratio.pool <- sort(postloss/preloss)
+ratio.pool <- ratio.pool[-20]
+mean(ratio.pool)
+percentage.diff <- (sort(postloss/preloss)[20]-mean(ratio.pool))/mean(ratio.pool)
+
+```
+
+```{r graph 4, echo=FALSE, results='markup', fig.cap='Figure 4'}
+#21. Generating figure 4 presenting placebo study results
+dotchart(rmspe.ratio,
+         xlab="Post-intervention RMSPE / Pre-intervenion RMSPE",
+         pch=15,
+         col = colors.rmspe,
+         main = "Ratio of Post-intervention RMSPE to\nPre-intervention RMSPE for Brazil and Control Countries")
+
+```
+
+### Robustness Test
+
+For the Robustness test, I iteratively re-estimate the model to construct a counterfactual of Brazil, omitting in each iteration one of the countries that were assigned at least 10\% weights in my main model, namely Peru, South Africa, Mexico, and Turkey.
+
+```{r robustness test, include=FALSE}
+#22. Coding/calculating robustness test
+
+# looping over leave one outs (only leaving out guys with 10%+ weight) _ KEEP THIS
+storegaps.rob <- 
+  matrix(NA,
+         length(c(1990:1994,1996:2018)),
+         4)
+colnames(storegaps.rob) <- c(12,14,17,20) #leave out the countries that were given positive weights in main result
+co.rob <- unique(data.v6.ready$index)[-3]
+
+for(k in 1:4){
+  
+  # data prep for training model
+  omit <- c(12,14,17,20)[k]  
+  dataprep.out.t.rob <-
+    dataprep(
+      foo = data.v6.ready,
+      predictors    = c("agva", "tradeop", "gdpc", "gcf", "indva", "infrate", "termstrade", "unemp"),
+      dependent     = "gdpc",
+      unit.variable = 1,
+      time.variable = 3,
+      treatment.identifier = 3,
+      controls.identifier = co.rob[-which(co.rob==omit)],
+      time.predictors.prior = 1990:2001, #this is training period
+      time.optimize.ssr = 2002:2006, #this is validation period
+      unit.names.variable = 2,
+      time.plot = c(1990:1994,1996:2018)
+    )
+  
+  # fit training model
+  synth.out.t.rob <- synth(
+    data.prep.obj=dataprep.out.t.rob,
+    Margin.ipop=.005,Sigf.ipop=7,Bound.ipop=6
+  )
+  
+  # data prep for main model
+  dataprep.out.m.rob <-
+    dataprep(
+      foo = data.v6.ready,
+      predictors    = c("agva", "tradeop", "gdpc", "gcf", "indva", "infrate", "termstrade", "unemp"),
+      dependent     = "gdpc",
+      unit.variable = 1,
+      time.variable = 3,
+      treatment.identifier = 3,
+      controls.identifier = co.rob[-which(co.rob==omit)],
+      time.predictors.prior = 2002:2006,
+      time.optimize.ssr = 1990:2005,
+      unit.names.variable = 2,
+      time.plot = c(1990:1994,1996:2018)
+    )
+  
+  # fit main model 
+  synth.out.m.rob <- synth(
+    data.prep.obj=dataprep.out.m.rob,
+    custom.v=as.numeric(synth.out.t.rob$solution.v)
+  )
+  storegaps.rob[,k] <- (dataprep.out.m.rob$Y0%*%synth.out.m.rob$solution.w)
+} # close loop over leave one outs
+
+
+```
+
+```{r graph 5, echo=FALSE, results='markup', fig.cap='Figure 5'}
+#22. Generating figure 5 presenting robustness test results
+synthY0 <- (dataprep.out.v6.main$Y0%*%synth.out.v6.main$solution.w)
+plot(c(1990:1994,1996:2018),dataprep.out.v6.main$Y1plot,
+     type="l",ylim=c(3000,20000),col="green",lty="solid",
+     ylab ="Per-Capita GDP, PPP (2017 int. $)",
+     xlab ="Year",
+     xaxs = "i", yaxs = "i",
+     lwd=2,
+     xaxt = "n",
+     main = "Leave-One-Out Distribution of the Synthetic Control for Brazil"
+)
+axis(1, at = years[seq(1, length(years), by = 3)], labels = years[seq(1, length(years), by = 3)])
+lines(c(1990:1994,1996:2018),synthY0,col="black",lty="dashed",lwd=2)
+abline(v=2005,lty="dotted")
+arrows(2004,Text.height,2004.8,Text.height,col="black",length=.1)
+text(1999.6,Text.height,"End of Pre-intervention Period",cex=Cex.set)
+lines(c(1990:1994,1996:2018),storegaps.rob[,1],col="orange",lty="solid")
+lines(c(1990:1994,1996:2018),storegaps.rob[,2],col="royalblue3",lty="solid")
+lines(c(1990:1994,1996:2018),storegaps.rob[,3],col="indianred3",lty="solid")
+lines(c(1990:1994,1996:2018),storegaps.rob[,4],col="slategray4",lty="solid")
+legend(x="topleft",
+       legend=c("Brazil",
+                "Synthetic Brazil",
+                "Synthetic Brazil (leave-one-out: Mexico)",
+                "Synthetic Brazil (leave-one-out: Peru)",
+                "Synthetic Brazil (leave-one-out: Turkey)",
+                "Synthetic Brazil (leave-one-out: South Africa)")
+       ,lty=c("solid","dashed","solid","solid","solid","solid"),col=c("green",
+                                              "black",
+                                              "orange",
+                                              "royalblue3",
+                                              "indianred3",
+                                              "slategray4")
+       ,cex=.8,bg="white",lwd=c(2,2,1))
+
+```
+
+Figure 5 reproduces the results in Figure 3 while also incorporating the estimates that exclude – in each iteration – one of the countries mentioned above from the country pool. This shows that the results presented in the *Findings* are robust to the exclusion of any particular country that was assigned a high predictive weight in my main model. The result of this test adds credibility to my results and rules out a limitation (i.e., results being mostly driven by a particular control country) that is presented in part of the SCM-based literature that studies Brazil as the country of interest. @carrasco2014decada, for example, derive a synthetic control with a much worse pre-intervention fit than the one presented here. Furthermore, their synthetic control heavily depends on Turkey (with a 0.577 weight). While the authors do not run a robustness test, it is likely that their results would not be robust to the exclusion of Turkey in the leave-one-out exercise. Conversely, in the case of the results presented here, the leave-one-out models estimate a similar negative effect of the New Economic Matrix on Brazil’s GDP per capita at the end of the sample period.
+
+### Alternative Synthetic Control
+
+The mathematical derivation of synthetic controls has very strict necessary conditions for data availability. For the variable of interest, the model can only be derived if there are no missing values across any of the countries in the sample (country of interest and all comparison units), across all the periods used in the analysis. Unfortunately, Human Capital Index is not reported on a yearly basis by the World Bank^[See https://data.worldbank.org/indicator/HD.HCI.OVRL?locations=BR]. The variables that generate the HCI are, however, more easily retrievable on a yearly or at least bi-yearly basis. The downside is that this would require a big effort of data merging and even more manual data collection, since the yearly information for the variables that generate the HCI can be retrieved from a number of national, institutional, and regional datasets, while the World Bank datasets are still full of missing values (NAs) for these variables when it comes to most of the countries in the sample of this study. Furthermore, as highlighted in the literature, the validity of synthetic controls depends on the usage of a large number of pre-intervention periods. It becomes increasingly harder to calculate the HCI for some countries as one goes back in time, due to limited data availability for our pool of developing sample units. Many countries in this sample lacked decent data collection efforts on variables relating to education and health before the 2000s.
+
+For this reason, and due to the time constraints related to the submission deadline of this version of the project, this alternative synthetic control exercise will be the focus of the next steps of my research on this topic. The next steps in the endeavor to complete this empirical extension are: 
+
+(1) Find the most complete country-year HCI dataset available.
+
+(2) Collect HCI or HCI component variables for missing observations of each country in national or regional datasets.
+
+(3) Calculate HCI for country-years for which only the HCI componets were available.
+
+(4) Merge the newly calculated and collected HCI data with the dataset described in (1).
+
+(5) Define a list of appropriate covariates for HCI.
+
+(6) Finally, derive the synthetic control that will estimate the counterfactual for the HCI trend in Brazil.
+
+## Discussion and Policy Implications
+
+This project attempts to quantify the impact of the New Economic Matrix policies on Brazilian GDP per capita. My results show that, in the aggregate, the NEM had significantly large negative effects on the Brazilian economy. My model generates a good pre-intervention fit for our counterfactual and presents results that demonstrate high credibility with respect to the inference tests for the synthetic control method. Based on the two empirical extensions above, Table 3, and fulfillment of all the main requirement and assumptions of the SCM, the results are conclusive and present strong evidence supporting my initial hypothesis.
+
+While developing economies provide challenges in terms of data availability and trend volatility compared to synthetic control studies that analyze developed countries, such as @abadie2015comparative, my research demonstrates the validity and usefulness of applying the synthetic control method in case studies of developing countries. Furthermore, this project shows more robust results than other synthetic control studies that analyze Brazil as the unit of interest^[@balassiano2018recessao and @carrasco2014decada, for example.].
+
+My results are in line with the previous literature on the recent underperformance of the Brazilian economy. I argue that the overall impacts of the policy-making strategy that came to be defined as the New Economic Matrix not only kept Brazil from completing its so-called take-off but also, at the very least, contributed to one of the most severe economic crises in the country’s history. At most, the NEM was one of the main causes of the crisis. In terms of policy implications, this suggests that the post-2005 interventionist economic policy-making strategy did not bear fruits in the long term. While economic policy in democracies is and should continue to be partially restrained and dictated by the political pendulum, policy-makers cannot forget that economic policy strategies must be based on data and evidence. Furthermore, even though government intervention is a necessary condition of any successful economy, one should keep in mind that adding a large number of market distortions while weakening regulatory agencies (as was the case in the NEM) is a risky strategy. With that being said, this study only analyzes the NEM as a whole, and more granular approaches in future research are needed in order to distinguish the good from the bad in the long list of policies that fall within the New Economic Matrix.
 
